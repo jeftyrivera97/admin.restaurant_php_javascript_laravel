@@ -29,6 +29,7 @@ class CompraController extends Controller
         $año = now()->format('y');
         $fecha_inicial="$año-$numMes-01";
         $fecha_final="$año-$numMes-31";
+        $n;
         
         $compras=Compra::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->orderBy('fecha')->get();
         return view('compra.index', compact('compras','mes','año'));
