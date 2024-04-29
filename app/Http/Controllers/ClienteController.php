@@ -1,0 +1,117 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Cliente;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+
+class ClienteController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $clientes= Cliente::where("id_estado",1)->get();
+        return view('cliente.index', compact('clientes'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        if(!Auth::check())
+        {
+            return redirect('/login');
+        }
+
+        return view('cliente.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        if(!Auth::check())
+        {
+            return redirect('/login');
+        }
+        $validatedData = $request->validate([
+             'codigo_cliente' => 'required',
+             'nombre' => 'required',
+             'telefono' => 'required|numeric|min:8',
+         ]);
+
+         $registro= now();
+
+        $clientes = new Cliente;
+        $clientes-> codigo_cliente = $request->codigo_cliente;
+        $clientes-> descripcion = $request->nombre;
+        $clientes-> telefono = $request->telefono;
+        $clientes-> id_estado= 1;
+        $clientes-> id_usuario= auth()->user()->id;
+        $clientes-> registro= $registro;
+        $clientes-> updated= $registro;
+        $clientes->save();
+
+        return redirect('/cliente/create')->with(['message' => 'Cliente Registrado con Exito.', 'alert' => 'alert-success']);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        if(!Auth::check())
+        {
+            return redirect('/login');
+        }
+        $cliente= Cliente::find($id);
+        return view('cliente.edit', compact('cliente'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        if(!Auth::check())
+        {
+            return redirect('/login');
+        }
+        $validatedData = $request->validate([
+             'codigo_cliente' => 'required',
+             'nombre' => 'required',
+             'telefono' => 'required|numeric|min:8',
+         ]);
+
+        $clientes = Cliente::find($id);
+        $clientes-> codigo_cliente = $request->codigo_cliente;
+        $clientes-> nombre = $request->nombre;
+        $clientes-> telefono = $request->telefono;
+        $clientes-> id_estado= 1;
+        $clientes->save();
+
+        return redirect("/cliente/$id/edit")->with(['message' => 'Cliente Editado con Exito!', 'alert' => 'alert-success']);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
+    }
+}
