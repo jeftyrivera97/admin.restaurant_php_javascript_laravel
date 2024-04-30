@@ -9,15 +9,12 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <x-nav-link :href="url('/venta/create')">
-                    <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Nuevo Registro</button>
-                    </x-nav-link>
-                    <x-nav-link :href="url('/venta/create')">
+                    <x-nav-link :href="url('/ingreso/create')">
                     <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Nuevo Registro</button>
                     </x-nav-link>
                     <br><br>
-                    <p class="text-lg text-gray-900 dark:text-white">Ventas de {{ $mes }} del 20{{ $año }}</p>
-                    <p class="text-sm text-gray-900 dark:text-white">{{count($ventas)}} Registros</p>
+                    <p class="text-lg text-gray-900 dark:text-white">Ingresos de {{ $mes }} del 20{{ $año }}</p>
+                    <p class="text-sm text-gray-900 dark:text-white">{{count($ingresos)}} Registros</p>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -40,23 +37,23 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($ventas as $venta)
+                                @foreach($ingresos as $ingreso)
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {{$venta->fecha}}
+                                        {{$ingreso->fecha}}
                                     </th>
                                     <td class="px-6 py-4">
-                                        {{$venta->descripcion}}
+                                        {{$ingreso->descripcion}}
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{$venta->categoria->descripcion}}
+                                        {{$ingreso->categoria->descripcion}}
                                     </td>
 
                                     <td class="px-6 py-4">
-                                        L. {{number_format($venta->total, 2)}}
+                                        L. {{number_format($ingreso->total, 2)}}
                                     </td>
                                     <td class="px-6 py-4 text-right">
-                                        <a href="{{ route('ingreso.edit', $ingreso->id_ingreso) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar </a>
+                                        <a href="{{ route('ingreso.edit', $ingreso->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar </a>
                                     </td>
                                 </tr>
                                 @endforeach

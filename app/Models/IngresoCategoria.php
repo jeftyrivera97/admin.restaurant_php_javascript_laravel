@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class VentaCategoria extends Model
+class IngresoCategoria extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $table="venta_categorias";
+    protected $table="ingreso_categorias";
     protected $primaryKey = 'id'; 
 
-    public function venta(): HasMany
+    public function ingreso(): HasMany
     {
-        return $this->hasMany(Venta::class);
+        return $this->hasMany(Ingreso::class);
     }
 }

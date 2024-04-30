@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Auto;
 use App\Models\Cliente;
-use App\Models\Venta;
-use App\Models\VentaCategoria;
+use App\Models\Ingreso;
+use App\Models\Update;
+use App\Models\IngresoCategoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 
 
-class VentaController extends Controller
+class IngresoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,8 +30,8 @@ class VentaController extends Controller
         $año = now()->format('y');
         $fecha_inicial="$año-$numMes-01";
         $fecha_final="$año-$numMes-31";
-        $ventas=Venta::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->orderBy('fecha')->get();
-        return view('venta.index', compact('ventas','mes','año'));
+        $ingresos=Ingreso::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->orderBy('fecha')->get();
+        return view('ingreso.index', compact('ingresos','mes','año'));
     }
 
     public static function obtenerMes($n){
@@ -108,76 +109,19 @@ class VentaController extends Controller
              'id_categoria' => 'required',
          ]);
 
+        $registro= now();
+
         $ingresos = new Ingreso;
         $ingresos-> descripcion = $request->descripcion;
         $ingresos-> fecha = $request->fecha;
-        $ingresos-> fechaHora = $request->fecha;
         $ingresos-> id_categoria = $request->id_categoria;
         $ingresos-> total = $request->total;
         $ingresos-> id_usuario= auth()->user()->id;
+        $ingresos-> registro= $registro;
+        $ingresos-> updated= $registro;
         $ingresos->save();
 
         return redirect('/ingreso/create')->with(['message' => 'Ingreso Registrado con Exito.', 'alert' => 'alert-success']);
-    }
-
-    public function createPintado()
-    {
-        if(!Auth::check())
-        {
-            return redirect('/login');
-        }
-        $categorias = IngresoCategoria::where('id_estado',1)->get();
-        $servicios = Servicio::where('id_estado',1)->get();
-        $clientes = Cliente::where('id_estado',1)->get();
-        $autos = Auto::where('id_estado',1)->get();
-
-        return view('ingreso.createPintado', compact('categorias','servicios','clientes','autos'));
-    }
-
-    public function storePintado(Request $request)
-    {
-        if(!Auth::check())
-        {
-            return redirect('/login');
-        }
-        $validatedData = $request->validate([
-             'descripcion' => 'required',
-             'fecha' => 'required',
-             'total' => 'required|numeric|min:1',
-             'id_categoria' => 'required',
-         ]);
-
-        $ingresos = new Ingreso;
-        $ingresos-> descripcion = $request->descripcion;
-        $ingresos-> fecha = $request->fecha;
-        $ingresos-> fechaHora = $request->fecha;
-        $ingresos-> id_categoria = $request->id_categoria;
-        $ingresos-> total = $request->total;
-        $ingresos-> id_usuario= auth()->user()->id;
-        $ingresos->save();
-
-        $pintados= new Pintado;
-        $pintados-> fecha = $request-> fecha;
-        $pintados-> id_cliente= $request-> id_cliente;
-        $pintados-> fecha_ingreso= $request-> fecha;
-        $pintados-> fecha_salida= $request-> fecha;
-        $pintados-> id_auto= $request-> id_auto;
-        $pintados-> color= $request-> color;
-        $pintados-> año= $request-> año;
-        $pintados-> placa= "Desconocido";
-        $pintados-> id_servicio = $request->id_servicio;
-        $pintados-> descripcion = $request-> descripcion;
-        $pintados-> id_estado=4;
-        $pintados-> id_usuario= auth()->user()->id;
-        $pintados->save();
-
-
-        $pintadoIngreso= new PintadoIngreso;
-        $pintadoIngreso-> id_pintado= $pintados->id_pintado;
-        $pintadoIngreso-> id_ingreso= $ingresos->id_ingreso;
-        $pintadoIngreso->save();
-
-        return redirect('/ingreso/pintado/create')->with(['message' => 'Ingreso Registrado con Exito!', 'alert' => 'alert-success']);
     }
 
     /**
@@ -218,14 +162,28 @@ class VentaController extends Controller
              'id_categoria' => 'required',
          ]);
 
+        $update= now();
+        $valor_inicial=  Ingreso::where("id","$id")->get();
+
         $ingresos =  Ingreso::find($id);
         $ingresos-> descripcion = $request->descripcion;
         $ingresos-> fecha = $request->fecha;
-        $ingresos-> fechaHora = $request->fecha;
         $ingresos-> id_categoria = $request->id_categoria;
         $ingresos-> total = $request->total;
         $ingresos-> id_usuario= auth()->user()->id;
+        $ingresos-> updated= $update;
         $ingresos->save();
+
+        $valor_final= Ingreso::where("id","$id")->get();
+
+        $updates = new Update;
+        $updates->tabla= "Ingresos";
+        $updates->codigo= $ingresos->id;
+        $updates->valor_inicial= $valor_inicial;
+        $updates->valor_final=  $valor_final;
+        $updates-> id_usuario= auth()->user()->id;
+        $updates-> registro= $update;
+        $updates->save();
 
         return redirect("/ingreso/$id/edit")->with(['message' => 'Ingreso Editado con Exito!', 'alert' => 'alert-success']);
     }

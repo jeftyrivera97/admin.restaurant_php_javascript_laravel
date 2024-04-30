@@ -17,8 +17,8 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('venta.index')" :active="request()->routeIs('venta.index')">
-                        {{ __('Ventas') }}
+                    <x-nav-link :href="route('ingreso.index')" :active="request()->routeIs('ingreso.index')">
+                        {{ __('Ingresos') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
@@ -37,6 +37,11 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('producto.index')" :active="request()->routeIs('producto.index')">
+                        {{ __('Inventario') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('empleado.index')" :active="request()->routeIs('empleado.index')">
                         {{ __('Empleados') }}
                     </x-nav-link>
@@ -51,6 +56,7 @@
                         {{ __('Proveedores') }}
                     </x-nav-link>
                 </div>
+               
    
             </div>
 
@@ -106,8 +112,8 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Inicio') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('venta.index')" :active="request()->routeIs('venta.index')">
-                {{ __('Ventas') }}
+            <x-responsive-nav-link :href="route('ingreso.index')" :active="request()->routeIs('ingreso.index')">
+                {{ __('Ingresos') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('compra.index')" :active="request()->routeIs('compra.index')">
                 {{ __('Compras') }}
@@ -117,6 +123,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('planilla.index')" :active="request()->routeIs('planilla.index')">
                 {{ __('Planillas') }}
+            <x-responsive-nav-link :href="route('producto.index')" :active="request()->routeIs('producto.index')">
+                {{ __('Inventario') }}
+            </x-responsive-nav-link>
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('empleado.index')" :active="request()->routeIs('empleado.index')">
                 {{ __('Empleados') }}

@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ventas', function (Blueprint $table) {
+        Schema::create('ingresos', function (Blueprint $table) {
             $table->id();
             $table->string('descripcion');
             $table->date('fecha');
-            $table->foreignId('id_categorias')->references('id')->on('venta_categorias');
+            $table->foreignId('id_categoria')->references('id')->on('ingreso_categorias');
             $table->double('total');
             $table->foreignId('id_usuario')->references('id')->on('users');
             $table->dateTimeTz('registro', precision: 0);
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ventas');
+        Schema::dropIfExists('ingresos');
     }
 };

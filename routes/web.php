@@ -3,10 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\GastoController;
-use App\Http\Controllers\VentaController;
+use App\Http\Controllers\IngresoController;
 use App\Http\Controllers\PlanillaController;
 use App\Http\Controllers\ClienteController;
-use App\Http\Controllers\AutoController;
+use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProveedorController;
@@ -23,11 +23,11 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::resource('venta', VentaController::class);
+Route::resource('ingreso', IngresoController::class);
 Route::resource('planilla', PlanillaController::class);
 Route::resource('compra', CompraController::class);
 Route::resource('gasto', GastoController::class);
-Route::resource('auto', AutoController::class);
+Route::resource('producto', ProductoController::class);
 Route::resource('empleado', EmpleadoController::class);
 Route::resource('cliente', ClienteController::class);
 Route::resource('proveedor', ProveedorController::class);

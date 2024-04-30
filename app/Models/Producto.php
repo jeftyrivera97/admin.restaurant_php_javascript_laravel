@@ -20,5 +20,9 @@ class Producto extends Model
     {
         return $this->belongsTo(Estado::class,'id_estado');
     }
+    public function Categoria()
+    {
+        return $this->belongsTo('App\Models\ProductoCategoria', 'id_categoria');
+    }
    
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\Update;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
@@ -97,12 +98,29 @@ class ClienteController extends Controller
              'telefono' => 'required|numeric|min:8',
          ]);
 
+        $updated= now();
+        $valor_inicial=  Cliente::where("id","$id")->get();
+
         $clientes = Cliente::find($id);
         $clientes-> codigo_cliente = $request->codigo_cliente;
-        $clientes-> nombre = $request->nombre;
+        $clientes-> descripcion = $request->nombre;
         $clientes-> telefono = $request->telefono;
         $clientes-> id_estado= 1;
+        $clientes-> updated= $updated;
         $clientes->save();
+
+        $valor_final= Cliente::where("id","$id")->get();
+        $updates = new Update;
+        $updates->tabla= "Clientes";
+        $updates->codigo= $clientes->id;
+        $updates->valor_inicial= $valor_inicial;
+        $updates->valor_final=  $valor_final;
+        $updates-> id_usuario= auth()->user()->id;
+        $updates-> registro= $updated;
+        $updates->save();
+
+      
+
 
         return redirect("/cliente/$id/edit")->with(['message' => 'Cliente Editado con Exito!', 'alert' => 'alert-success']);
     }

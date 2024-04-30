@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Venta extends Model
+class Ingreso extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $table="ventas";
+    protected $table="ingresos";
     protected $primaryKey = 'id';
 
     
@@ -18,9 +18,9 @@ class Venta extends Model
         return $this->belongsTo(User::class,'id_usuario');
     }
 
-    public function categoria(): BelongsTo
+    public function Categoria()
     {
-        return $this->belongsTo(VentaCategoria::class,'id_categoria');
+        return $this->belongsTo('App\Models\IngresoCategoria', 'id_categoria');
     }
 
 }

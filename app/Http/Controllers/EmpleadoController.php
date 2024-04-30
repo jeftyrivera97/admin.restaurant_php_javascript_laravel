@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empleado;
+use App\Models\Update;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
@@ -100,13 +101,28 @@ class EmpleadoController extends Controller
              'telefono' => 'required|numeric|min:8',
          ]);
 
-        $empleados = Empleado::find($id);;
+        $valor_inicial=  Empleado::where("id","$id")->get();
+        $updated= now();
+
+        $empleados = Empleado::find($id);
         $empleados-> codigo_empleado = $request->codigo_empleado;
         $empleados-> descripcion = $request->nombre;
         $empleados-> telefono = $request->telefono;
         $empleados-> puesto = $request->puesto;
         $empleados-> id_estado= 1;
+        $empleados-> updated= $updated;
         $empleados->save();
+
+        $valor_final= Empleado::where("id","$id")->get();
+
+        $updates = new Update;
+        $updates->tabla= "Empleados";
+        $updates->codigo= $empleados->id;
+        $updates->valor_inicial= $valor_inicial;
+        $updates->valor_final=  $valor_final;
+        $updates-> id_usuario= auth()->user()->id;
+        $updates-> registro= $updated;
+        $updates->save();
 
         return redirect("/empleado/$id/edit")->with(['message' => 'Empleado Editado con Exito!', 'alert' => 'alert-success']);
     }

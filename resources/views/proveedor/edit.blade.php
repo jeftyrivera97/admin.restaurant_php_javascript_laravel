@@ -19,7 +19,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-4 text-gray-900 dark:text-gray-100">
-                    <form action="{!!route('proveedor.update', $proveedor->id_proveedor)!!}" method="POST">
+                    <form action="{!!route('proveedor.update', $proveedor->id)!!}" method="POST">
                         @method('PATCH')
                         @csrf
                         <div class="grid md:grid-cols-2 md:gap-6">
