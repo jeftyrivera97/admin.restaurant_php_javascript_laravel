@@ -15,7 +15,15 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        $clientes= Cliente::where("id_estado",1)->get();
+        $id_usuario= auth()->user()->id;
+        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
+            $id_empresa=1;
+        }
+        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
+            $id_empresa=2;
+        }
+
+        $clientes= Cliente::where("id_estado",1)->where('id_empresa',$id_empresa)->get();
         return view('cliente.index', compact('clientes'));
     }
 
@@ -47,12 +55,21 @@ class ClienteController extends Controller
              'telefono' => 'required|numeric|min:8',
          ]);
 
+         $id_usuario= auth()->user()->id;
+        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
+            $id_empresa=1;
+        }
+        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
+            $id_empresa=2;
+        }
+
          $registro= now();
 
         $clientes = new Cliente;
         $clientes-> codigo_cliente = $request->codigo_cliente;
         $clientes-> descripcion = $request->nombre;
         $clientes-> telefono = $request->telefono;
+        $clientes-> id_empresa=  $id_empresa;
         $clientes-> id_estado= 1;
         $clientes-> id_usuario= auth()->user()->id;
         $clientes-> registro= $registro;
@@ -101,6 +118,14 @@ class ClienteController extends Controller
         $updated= now();
         $valor_inicial=  Cliente::where("id","$id")->get();
 
+        $id_usuario= auth()->user()->id;
+        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
+            $id_empresa=1;
+        }
+        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
+            $id_empresa=2;
+        }
+
         $clientes = Cliente::find($id);
         $clientes-> codigo_cliente = $request->codigo_cliente;
         $clientes-> descripcion = $request->nombre;
@@ -115,6 +140,7 @@ class ClienteController extends Controller
         $updates->codigo= $clientes->id;
         $updates->valor_inicial= $valor_inicial;
         $updates->valor_final=  $valor_final;
+        $updates->id_empresa=  $id_empresa;
         $updates-> id_usuario= auth()->user()->id;
         $updates-> registro= $updated;
         $updates->save();

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('id_categoria')->references('id')->on('producto_categorias');
             $table->double('stock');
             $table->double('costo');
+            $table->foreignId('id_empresa')->references('id')->on('empresas');
             $table->foreignId('id_usuario')->references('id')->on('users');
             $table->foreignId('id_estado')->references('id')->on('estados');
             $table->dateTimeTz('registro', precision: 0);

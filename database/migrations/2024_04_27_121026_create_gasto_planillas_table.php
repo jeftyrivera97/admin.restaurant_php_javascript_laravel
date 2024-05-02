@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('id_gasto')->references('id')->on('gastos');
             $table->foreignId('id_planilla')->references('id')->on('planillas');
+            $table->foreignId('id_empresa')->references('id')->on('empresas');
         });
     }
 

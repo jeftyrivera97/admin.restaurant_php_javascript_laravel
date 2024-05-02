@@ -46,12 +46,25 @@
                             <div class="relative z-0 w-full mb-6 group">
                                 <select id="categoria" name="categoria" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.0 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                                     <option value="{{$proveedor->categoria}}">{{$proveedor->categoria}}</option>
-                                    <option value="Pinturas">Pinturas</option>
-                                    <option value="Repuestos">Repuestos</option>
-                                    <option value="Materiales">Materiales</option>
-                                    <option value="Vidrios">Vidrios</option>
-                                    <option value="Servicios Generales">Servicios Generales</option>
-                                    <option value="Polzarizados">Polarizados</option>
+                                    @if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 )
+                                        <option value="Alimentos">Alimentos Varios</option>
+                                        <option value="Alimentos">Abarroteria</option>
+                                        <option value="Alimentos">Marisqueria</option>
+                                        <option value="Carnes">Carnes</option>
+                                        <option value="Pollos">Pollos</option>
+                                        <option value="Frutas y Verduras">Frutas y Verduras</option>
+                                        <option value="Bebidas">Bebidas Alcoholicas</option>
+                                        <option value="Bebidas">Bebidas No Alcoholicas</option>
+                                        <option value="Bebidas">Bebidas Gaseosas</option>
+                                        <option value="Bebidas">Bebidas Varios</option>
+                                        <option value="Limpieza e Higiene">Limpieza e Higiene</option>
+                                    @endif
+                                    @if($id_usuario==4 or $id_usuario==5 or $id_usuario==6 )
+                                        <option value="Materiales">Materiales</option>
+                                        <option value="Repuestos">Repuestos</option>
+                                        <option value="Aditivos">Aditivos</option>
+                                        <option value="Productos Mecanicos Varios">Productos Mecanicos Varios</option>
+                                    @endif
                                   </select>
                             </div>
                         </div>

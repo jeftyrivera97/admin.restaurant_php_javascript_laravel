@@ -23,6 +23,13 @@ class IngresoController extends Controller
         {
             return redirect('/login');
         }
+        $id_usuario= auth()->user()->id;
+        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
+            $id_empresa=1;
+        }
+        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
+            $id_empresa=2;
+        }
         
         $mes= now()->format('F');
         $numMes = now()->format('m');
@@ -30,7 +37,7 @@ class IngresoController extends Controller
         $año = now()->format('y');
         $fecha_inicial="$año-$numMes-01";
         $fecha_final="$año-$numMes-31";
-        $ingresos=Ingreso::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->orderBy('fecha')->get();
+        $ingresos=Ingreso::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->where('id_empresa',$id_empresa)->get();
         return view('ingreso.index', compact('ingresos','mes','año'));
     }
 
@@ -109,6 +116,14 @@ class IngresoController extends Controller
              'id_categoria' => 'required',
          ]);
 
+         $id_usuario= auth()->user()->id;
+        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
+            $id_empresa=1;
+        }
+        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
+            $id_empresa=2;
+        }
+
         $registro= now();
 
         $ingresos = new Ingreso;
@@ -116,6 +131,7 @@ class IngresoController extends Controller
         $ingresos-> fecha = $request->fecha;
         $ingresos-> id_categoria = $request->id_categoria;
         $ingresos-> total = $request->total;
+        $ingresos-> id_empresa = $id_empresa;
         $ingresos-> id_usuario= auth()->user()->id;
         $ingresos-> registro= $registro;
         $ingresos-> updated= $registro;
@@ -162,6 +178,14 @@ class IngresoController extends Controller
              'id_categoria' => 'required',
          ]);
 
+         $id_usuario= auth()->user()->id;
+         if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
+             $id_empresa=1;
+         }
+         else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
+             $id_empresa=2;
+         }
+
         $update= now();
         $valor_inicial=  Ingreso::where("id","$id")->get();
 
@@ -181,6 +205,7 @@ class IngresoController extends Controller
         $updates->codigo= $ingresos->id;
         $updates->valor_inicial= $valor_inicial;
         $updates->valor_final=  $valor_final;
+        $updates-> id_empresa = $id_empresa;
         $updates-> id_usuario= auth()->user()->id;
         $updates-> registro= $update;
         $updates->save();

@@ -18,6 +18,12 @@ class DatabaseSeeder extends Seeder
             EstadoCuentaSeeder::class,
             TipoCuentaSeeder::class,
             EstadoSeeder::class,
+            EmpresaSeeder::class,
+            GastoCategoriaSeeder::class,
+            CompraCategoriaSeeder::class,
+            IngresoCategoriaSeeder::class,
+            ProductoCategoriaSeeder::class,
+
         ]);
     }
 }

@@ -48,14 +48,20 @@
                                 <select id="puesto" name="puesto" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.0 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                                     <option value="{{ $empleado->puesto }}"> {{ $empleado->puesto }}</option>
                                     <option value="Administracion">Administracion</option>
-                                    <option value="Gerencia Propietaria">Gerencia Propietaria</option>
-                                    <option value="Cocina">Cocina</option>
-                                    <option value="Pintura">Pintura</option>
-                                    <option value="Ayudante Pintura">Ayudante Pintura</option>
-                                    <option value="Soldadura">Soldadura</option>
-                                    <option value="Enderezado">Enderezado</option>
-                                    <option value="Mecanica">Mecanica</option>
-                                    <option value="Ayudante Mecanica">Ayudante Mecanica</option>
+                                    <option value="Administracion">Contador</option>
+                                    <option value="Gerencia">Gerencia</option>
+                                    @if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 )  
+                                        <option value="Cocina">Cocina</option>
+                                        <option value="Mesero">Mesero</option>
+                                        <option value="Guardia de Seguridad">Guardia de Seguridad</option>
+                                    @endif
+                                    @if($id_usuario==4 or $id_usuario==5 or $id_usuario==6 )
+                                    <option value="Mecanico Supervisor">Mecanico Supervisor</option>
+                                    <option value="Mecanico General">Mecanico General</option>
+                                    <option value="Mecanico Ayudante">Mecanico Ayudante</option>
+                                    <option value="Soldador">Soldador</option>
+                                    <option value="Electricista">Electricista</option>
+                                    @endif
                                   </select>
                             </div>
                             <div class="relative z-0 w-full mb-6 group">

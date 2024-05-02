@@ -22,13 +22,23 @@ class PlanillaController extends Controller
         {
             return redirect('/login');
         }
+
+        $id_usuario= auth()->user()->id;
+        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
+            $id_empresa=1;
+        }
+        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
+            $id_empresa=2;
+        }
+
+
         $mes= now()->format('F');
         $numMes = now()->format('m');
         $mes= $this->obtenerMes($numMes);
         $año = now()->format('y');
         $fecha_inicial="$año-$numMes-01";
         $fecha_final="$año-$numMes-31";
-        $planillas=Planilla::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->orderBy('fecha')->get();
+        $planillas=Planilla::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->where('id_empresa',$id_empresa)->get();
         return view('planilla.index', compact('planillas','mes','año'));
 
     }
@@ -108,6 +118,14 @@ class PlanillaController extends Controller
              'total' => 'required|numeric|min:1',
          ]);
 
+         $id_usuario= auth()->user()->id;
+        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
+            $id_empresa=1;
+        }
+        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
+            $id_empresa=2;
+        }
+
 
         $empleadoID=  $request->id_empleado;
         $empleados =  Empleado::find($empleadoID);
@@ -123,6 +141,7 @@ class PlanillaController extends Controller
         $planillas-> fecha = $request->fecha;
         $planillas-> descripcion = $request->descripcion;
         $planillas-> total = $request->total;
+        $planillas-> id_empresa = $id_empresa;
         $planillas-> id_usuario= auth()->user()->id;
         $planillas-> registro= $registro;
         $planillas-> updated= $registro;
@@ -134,6 +153,7 @@ class PlanillaController extends Controller
         $gastos-> descripcion = $descripcion;
         $gastos-> id_categoria = 1;
         $gastos-> total = $request->total;
+        $gastos-> id_empresa = $id_empresa;
         $gastos-> id_usuario= auth()->user()->id;
         $gastos-> registro= $registro;
         $gastos-> updated= $registro;
@@ -142,6 +162,7 @@ class PlanillaController extends Controller
         $gastos_planillas= new GastoPlanilla;
         $gastos_planillas-> id_gasto= $gastos->id;
         $gastos_planillas-> id_planilla= $planillas->id;
+        $gastos_planillas-> id_empresa = $id_empresa;
         $gastos_planillas->save();
 
 
@@ -167,8 +188,9 @@ class PlanillaController extends Controller
             return redirect('/login');
         }
         $planilla= Planilla::where('id',$id)->first();
+        $id_usuario= auth()->user()->id;
         $empleados = Empleado::where('id_estado',1)->get();
-        return view('planilla.edit', compact('empleados','planilla','id'));
+        return view('planilla.edit', compact('empleados','planilla','id','id_usuario'));
     }
 
     /**
@@ -188,6 +210,14 @@ class PlanillaController extends Controller
             'fecha' => 'required',
             'total' => 'required|numeric|min:1',
         ]);
+
+        $id_usuario= auth()->user()->id;
+        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
+            $id_empresa=1;
+        }
+        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
+            $id_empresa=2;
+        }
 
          $updated= now();
          $valor_inicialP=  Planilla::where("id","$id")->get();
@@ -234,6 +264,7 @@ class PlanillaController extends Controller
         $updates->codigo= $id_gasto;
         $updates->valor_inicial= $valor_inicialG;
         $updates->valor_final=  $valor_finalG;
+        $updates-> id_empresa = $id_empresa;
         $updates-> id_usuario= auth()->user()->id;
         $updates-> registro= $updated;
         $updates->save();
@@ -243,6 +274,7 @@ class PlanillaController extends Controller
         $updates->codigo= $id_planilla;
         $updates->valor_inicial= $valor_inicialP;
         $updates->valor_final=  $valor_finalP;
+        $updates-> id_empresa = $id_empresa;
         $updates-> id_usuario= auth()->user()->id;
         $updates-> registro= $updated;
         $updates->save();

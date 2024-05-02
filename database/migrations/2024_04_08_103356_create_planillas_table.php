@@ -17,6 +17,7 @@ return new class extends Migration
             $table->date('fecha');
             $table->foreignId('id_empleado')->references('id')->on('empleados');
             $table->double('total');
+            $table->foreignId('id_empresa')->references('id')->on('empresas');
             $table->foreignId('id_usuario')->references('id')->on('users');
             $table->dateTimeTz('registro', precision: 0);
             $table->dateTimeTz('updated', precision: 0);

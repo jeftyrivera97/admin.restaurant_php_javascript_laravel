@@ -15,7 +15,21 @@ class ProveedorController extends Controller
      */
     public function index()
     {
-        $proveedores= Proveedor::where("id_estado",1)->get();
+        
+        if(!Auth::check())
+        {
+            return redirect('/login');
+        }
+
+        $id_usuario= auth()->user()->id;
+        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
+            $id_empresa=1;
+        }
+        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
+            $id_empresa=2;
+        }
+        
+        $proveedores= Proveedor::where("id_estado",1)->where('id_empresa',$id_empresa)->get();
         return view('proveedor.index', compact('proveedores'));
     }
 
@@ -29,7 +43,9 @@ class ProveedorController extends Controller
             return redirect('/login');
         }
 
-        return view('proveedor.create');
+        $id_usuario= auth()->user()->id;
+
+        return view('proveedor.create', compact("id_usuario"));
     }
 
     /**
@@ -49,6 +65,14 @@ class ProveedorController extends Controller
              'telefono' => 'required|numeric|min:8',
          ]);
 
+         $id_usuario= auth()->user()->id;
+         if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
+             $id_empresa=1;
+         }
+         else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
+             $id_empresa=2;
+         }
+
         $registro= now();
 
         $proveedores = new Proveedor;
@@ -58,6 +82,7 @@ class ProveedorController extends Controller
         $proveedores-> telefono = $request->telefono;
         $proveedores-> categoria = $request->categoria;
         $proveedores-> id_estado= 1;
+        $proveedores-> id_empresa = $id_empresa;
         $proveedores-> id_usuario= auth()->user()->id;
         $proveedores-> registro= $registro;
         $proveedores-> updated= $registro;
@@ -84,7 +109,8 @@ class ProveedorController extends Controller
             return redirect('/login');
         }
         $proveedor= Proveedor::find($id);
-        return view('proveedor.edit', compact('proveedor'));
+        $id_usuario= auth()->user()->id;
+        return view('proveedor.edit', compact('proveedor','id_usuario'));
     }
 
     /**
@@ -99,6 +125,13 @@ class ProveedorController extends Controller
             'categoria' => 'required',
             'telefono' => 'required|numeric|min:8',
         ]);
+        $id_usuario= auth()->user()->id;
+        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
+            $id_empresa=1;
+        }
+        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
+            $id_empresa=2;
+        }
 
        $updated= now();
 
@@ -121,6 +154,7 @@ class ProveedorController extends Controller
        $updates->codigo= $proveedores->id;
        $updates->valor_inicial= $valor_inicial;
        $updates->valor_final=  $valor_final;
+       $updates-> id_empresa = $id_empresa;
        $updates-> id_usuario= auth()->user()->id;
        $updates-> registro= $updated;
        $updates->save();

@@ -15,7 +15,15 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        $empleados= Empleado::where("id_estado",1)->get();
+        $id_usuario= auth()->user()->id;
+        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
+            $id_empresa=1;
+        }
+        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
+            $id_empresa=2;
+        }
+
+        $empleados= Empleado::where("id_estado",1)->where('id_empresa',$id_empresa)->get();
         return view('empleado.index', compact('empleados'));
     }
 
@@ -29,7 +37,9 @@ class EmpleadoController extends Controller
             return redirect('/login');
         }
 
-        return view('empleado.create');
+        $id_usuario= auth()->user()->id;
+
+        return view('empleado.create', compact('id_usuario'));
     }
 
     /**
@@ -50,12 +60,21 @@ class EmpleadoController extends Controller
 
          
         $registro= now();
+        $id_usuario= auth()->user()->id;
+        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
+            $id_empresa=1;
+        }
+        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
+            $id_empresa=2;
+        }
+
         $empleados = new Empleado;
         $empleados-> codigo_empleado = $request->codigo_empleado;
         $empleados-> descripcion = $request->nombre;
         $empleados-> telefono = $request->telefono;
         $empleados-> puesto = $request->puesto;
         $empleados-> id_estado= 1;
+        $empleados-> id_empresa = $id_empresa;
         $empleados-> id_usuario= auth()->user()->id;
         $empleados-> registro= $registro;
         $empleados-> updated= $registro;
@@ -82,7 +101,8 @@ class EmpleadoController extends Controller
             return redirect('/login');
         }
         $empleado= Empleado::find($id);
-        return view('empleado.edit', compact('empleado'));
+        $id_usuario= auth()->user()->id;
+        return view('empleado.edit', compact('empleado','id_usuario'));
     }
 
     /**
@@ -100,6 +120,13 @@ class EmpleadoController extends Controller
              'puesto' => 'required',
              'telefono' => 'required|numeric|min:8',
          ]);
+         $id_usuario= auth()->user()->id;
+        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
+            $id_empresa=1;
+        }
+        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
+            $id_empresa=2;
+        }
 
         $valor_inicial=  Empleado::where("id","$id")->get();
         $updated= now();
@@ -120,6 +147,7 @@ class EmpleadoController extends Controller
         $updates->codigo= $empleados->id;
         $updates->valor_inicial= $valor_inicial;
         $updates->valor_final=  $valor_final;
+        $updates-> id_empresa = $id_empresa;
         $updates-> id_usuario= auth()->user()->id;
         $updates-> registro= $updated;
         $updates->save();

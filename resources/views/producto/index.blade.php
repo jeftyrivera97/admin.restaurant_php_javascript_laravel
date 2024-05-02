@@ -34,6 +34,9 @@
                                     <th scope="col" class="px-6 py-3">
                                         Costo
                                     </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Valor en Inventario
+                                    </th>
                                      <th scope="col" class="px-6 py-3">
                                         
                                      </th>
@@ -53,6 +56,9 @@
                                     </td>
                                     <td class="px-6 py-4">
                                     {{$producto->stock}}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                    {{$producto->stock*$producto->costo }}
                                     </td>
                                     <td class="px-6 py-4">
                                         L. {{number_format($producto->costo, 2)}}

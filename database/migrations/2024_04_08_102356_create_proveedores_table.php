@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('contacto');
             $table->string('categoria');
             $table->string('telefono');
+            $table->foreignId('id_empresa')->references('id')->on('empresas');
             $table->foreignId('id_estado')->references('id')->on('estados');
             $table->foreignId('id_usuario')->references('id')->on('users');
             $table->dateTimeTz('registro', precision: 0);
