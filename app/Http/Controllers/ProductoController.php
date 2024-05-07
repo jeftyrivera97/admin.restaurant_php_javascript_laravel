@@ -194,7 +194,7 @@ class ProductoController extends Controller
          
         $updated= now();
         $valor_inicial=  Producto::where("id","$id")->get();
-
+        
         $productos = Producto::find($id);
         $productos-> codigo_producto = $request->codigo_producto;
         $productos-> descripcion = $request->descripcion;

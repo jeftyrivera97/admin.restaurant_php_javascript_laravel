@@ -34,4 +34,6 @@ class Compra extends Model
         return $this->belongsTo('App\Models\CompraCategoria', 'id_categoria');
     }
 
+   
+
 }

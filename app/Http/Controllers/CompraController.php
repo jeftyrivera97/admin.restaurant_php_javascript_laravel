@@ -6,6 +6,8 @@ use App\Models\Compra;
 use App\Models\Proveedor;
 use App\Models\Update;
 use App\Models\CompraCategoria;
+use App\Models\Producto;
+use App\Models\CompraDetalle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
@@ -368,6 +370,118 @@ class CompraController extends Controller
             return redirect("/compra/$id/edit")->with(['message' => 'Compra Actualizada con Exito.', 'alert' => 'alert-success']);
         }
         
+    }
+
+    public function detalle(string $id)
+    {
+        if(!Auth::check())
+        {
+            return redirect('/login');
+        }
+
+
+        $compra= Compra::find($id);
+        $proveedores=Proveedor::where('id_estado','1')->get();
+        $categorias = CompraCategoria::where('id_estado',1)->get();
+        $productos= Producto::where('id_estado',1)->get();
+        $detalles=CompraDetalle::where('id_compra',$id)->get();
+        $contador= 0;
+        foreach ($detalles as $d) {
+            $lineaT= $d->total_linea;
+            $contador = $lineaT + $contador;
+        }
+
+        return view('compra.detalle', compact('proveedores','categorias','compra','id','productos','detalles','contador'));
+    }
+
+    public function storeDetalle(Request $request)
+    {
+        if(!Auth::check())
+        {
+            return redirect('/login');
+        }
+        $registro= now();
+
+        $costo= $request->costo;
+        $cantidad = $request->cantidad;
+        $totalLinea= $costo*$cantidad;
+        $id_compra =$request->id;
+        $id_producto = $request->id_producto;
+        $buscar= CompraDetalle::where('id_compra',$id_compra)->where('id_producto' ,$id_producto)->get();
+
+        $x= count($buscar);
+        if($x>0){
+            return redirect("/compraDetalle/$id_compra")->with(['validacionTotal' => 'Este Producto ya ha sido agregado.', 'alert' => 'alert-warning']);
+        }
+
+        $buscar= CompraDetalle::where('id_compra',$id_compra)->get();
+        $x= count($buscar);
+
+        if($x>0){
+            $linea= $x+1;
+        }else{
+            $linea= 1;
+        }
+       
+        $detalles = new CompraDetalle;
+        $detalles-> linea =$linea;
+        $detalles-> id_compra =$id_compra;
+        $detalles-> id_producto = $request->id_producto;
+        $detalles-> cantidad =  $request->cantidad;
+        $detalles-> costo = $request->costo;
+        $detalles-> total_linea =  $totalLinea;
+        $detalles-> id_usuario= auth()->user()->id;
+        $detalles-> registro= $registro;
+        $detalles-> updated= $registro;
+        $detalles->save();
+
+        $compra= Compra::find($id_compra);
+        $proveedores=Proveedor::where('id_estado','1')->get();
+        $categorias = CompraCategoria::where('id_estado',1)->get();
+        $productos= Producto::where('id_estado',1)->get();
+        $detalles=CompraDetalle::where('id_compra',$id_compra)->get();
+        $totalDetalle;
+
+        $contador= 0;
+        foreach ($detalles as $d) {
+            $lineaT= $d->total_linea;
+            $contador = $lineaT + $contador;
+        }
+
+        $id_usuario= auth()->user()->id;
+        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
+            $id_empresa=1;
+        }
+        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
+            $id_empresa=2;
+        }
+        
+       $updated= now();
+       $valor_inicial=Producto::where('id' ,$id_producto)->first();
+       $stockActual = $valor_inicial->stock;
+       $stockNuevo = $stockActual + $cantidad;
+
+       $productos = Producto::find($id_producto);
+       $productos-> stock = $stockNuevo;
+       $productos-> costo = $request->costo;
+       $productos-> id_usuario= auth()->user()->id;
+       $productos-> updated= $updated;
+       $productos->save();
+
+       $valor_final=  Producto::where('id' ,$id_producto)->first();
+       
+       $updates = new Update;
+       $updates->tabla= "Productos";
+       $updates->codigo= $productos->id;
+       $updates->valor_inicial= $valor_inicial;
+       $updates->valor_final=  $valor_final;
+       $updates-> id_empresa = $id_empresa;
+       $updates-> id_usuario= auth()->user()->id;
+       $updates-> registro= $updated;
+       $updates->save();
+       
+        return redirect("/compraDetalle/$id_compra")->with(['message' => 'Producto Agregado con Exito.', 'alert' => 'alert-success']);
+       // return view('compra.detalle', compact('proveedores','categorias','compra','id','productos','detalles','contador'));
     }
 
     /**

@@ -115,6 +115,7 @@
                                     </td>
                                     <td class="px-6 py-4 text-right">
                                         <a href="{{ route('compra.edit', $compra->id) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar </a>
+                                        <a href="{{ route('compraDetalle', $compra->id) }}" class="font-medium text-orange-600 dark:text-orange-500 hover:underline">Detalle </a>
                                     </td>
                                 </tr>
                                 @endforeach

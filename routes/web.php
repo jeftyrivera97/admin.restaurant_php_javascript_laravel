@@ -46,6 +46,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/compraDetalle/{id}', [CompraController::class, 'detalle'])->middleware(['auth', 'verified'])->name('compraDetalle');
+Route::post('/storeDetalle', [CompraController::class, 'storeDetalle'])->middleware(['auth', 'verified'])->name('storeDetalle');
+
+
 
 
 Route::middleware('auth')->group(function () {

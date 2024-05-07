@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('compras_detalles', function (Blueprint $table) {
+        Schema::create('compra_detalles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_compra')->references('id')->on('compras');
             $table->bigInteger('linea');
             $table->foreignId('id_producto')->references('id')->on('productos');
             $table->double('cantidad');
-            $table->double('precio');
+            $table->double('costo');
             $table->double('total_linea');
             $table->foreignId('id_usuario')->references('id')->on('users');
             $table->dateTimeTz('registro', precision: 0);
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('compras_detalles');
+        Schema::dropIfExists('compra_detalles');
     }
 };
