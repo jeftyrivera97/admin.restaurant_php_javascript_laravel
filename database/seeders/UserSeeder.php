@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         DB::table('users')->insert([
-            'name' => 'Sistema Lunas',
+            'name' => 'Sistema Admin Lunas',
             'email' => 'jeftyrivera97@hotmail.com',
             'password' => Hash::make('Pontiac2016'),
         ]);
@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('Pontiac2016'),
         ]);
         DB::table('users')->insert([
-            'name' => 'Sistema Taller',
+            'name' => 'Sistema Admin Taller',
             'email' => 'jeftyrivera97@gmail.com',
             'password' => Hash::make('Pontiac2016'),
         ]);
