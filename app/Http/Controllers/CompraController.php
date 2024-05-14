@@ -100,7 +100,20 @@ class CompraController extends Controller
             return redirect('/login');
         }
         $proveedores=Proveedor::where('id_estado','1')->get();
-        $categorias = CompraCategoria::where('id_estado',1)->get();
+        $id_usuario= auth()->user()->id;
+        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
+            $id_empresa=1;
+            $categorias = CompraCategoria::where('id_estado',1)->where('id','<=','7')->get();
+
+        }
+        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
+            $id_empresa=2;
+            $categorias = CompraCategoria::where('id_estado',1)->where('id','>','7')->get();
+        }
+
+       
+
+
         return view('compra.create', compact('proveedores','categorias'));
     }
 

@@ -96,7 +96,18 @@ class IngresoController extends Controller
         {
             return redirect('/login');
         }
-        $categorias = IngresoCategoria::where('id_estado',1)->get();
+        $id_usuario= auth()->user()->id;
+        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
+            $id_empresa=1;
+            $categorias = IngresoCategoria::where('id_estado',1)->where('id','!=','5')->get();
+        }
+        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
+            $id_empresa=2;
+            $categorias = IngresoCategoria::where('id_estado',1)->where('id','>','4')->get();
+        }
+
+
+       
         return view('ingreso.create', compact('categorias'));
     }
 

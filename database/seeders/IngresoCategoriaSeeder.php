@@ -15,10 +15,7 @@ class IngresoCategoriaSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('ingreso_categorias')->insert([
-            'descripcion' => 'Prestacion de Servicio',
-            'id_estado' => '1',
-        ]);
+       
         DB::table('ingreso_categorias')->insert([
             'descripcion' => 'Venta de Turno',
             'id_estado' => '1',
@@ -33,6 +30,10 @@ class IngresoCategoriaSeeder extends Seeder
         ]);
         DB::table('ingreso_categorias')->insert([
             'descripcion' => 'Venta en POS',
+            'id_estado' => '1',
+        ]);
+        DB::table('ingreso_categorias')->insert([
+            'descripcion' => 'Prestacion de Servicio',
             'id_estado' => '1',
         ]);
         DB::table('ingreso_categorias')->insert([
@@ -55,5 +56,6 @@ class IngresoCategoriaSeeder extends Seeder
             'descripcion' => 'Inyeccion Capital Propio',
             'id_estado' => '1',
         ]);
+   
     }
 }

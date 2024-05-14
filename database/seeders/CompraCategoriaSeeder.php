@@ -55,5 +55,17 @@ class CompraCategoriaSeeder extends Seeder
             'descripcion' => 'Compra de Piezas Vehiculares',
             'id_estado' => '1',
         ]);
+        DB::table('compra_categorias')->insert([
+            'descripcion' => 'Compra de Aceites Automotriz',
+            'id_estado' => '1',
+        ]);
+        DB::table('compra_categorias')->insert([
+            'descripcion' => 'Compra de Liquidos Aditivos',
+            'id_estado' => '1',
+        ]);
+        DB::table('compra_categorias')->insert([
+            'descripcion' => 'Compra de Accesorios',
+            'id_estado' => '1',
+        ]);
     }
 }
