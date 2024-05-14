@@ -207,7 +207,8 @@ class IngresoController extends Controller
         $updates->valor_final=  $valor_final;
         $updates-> id_empresa = $id_empresa;
         $updates-> id_usuario= auth()->user()->id;
-        $updates-> registro= $update;
+        $updates-> fecha= $updated;
+        $updates-> descripcion= "Ingreso Modificado";
         $updates->save();
 
         return redirect("/ingreso/$id/edit")->with(['message' => 'Ingreso Editado con Exito!', 'alert' => 'alert-success']);

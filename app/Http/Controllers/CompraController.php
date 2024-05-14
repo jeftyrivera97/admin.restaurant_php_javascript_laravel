@@ -326,7 +326,8 @@ class CompraController extends Controller
             $updates->valor_final=  $valor_final;
             $updates-> id_empresa = $id_empresa;
             $updates-> id_usuario= auth()->user()->id;
-            $updates-> registro= $updated;
+            $updates-> fecha= $updated;
+            $updates-> descripcion= "Compra Modificada";
             $updates->save();
 
             return redirect("/compra/$id/edit")->with(['message' => 'Compra Actualizada con Exito.', 'alert' => 'alert-success']);
@@ -364,7 +365,8 @@ class CompraController extends Controller
             $updates->valor_final=  $valor_final;
             $updates-> id_empresa = $id_empresa;
             $updates-> id_usuario= auth()->user()->id;
-            $updates-> registro= $updated;
+            $updates-> fecha= $updated;
+            $updates-> descripcion= "Compra Modificada";
             $updates->save();
     
             return redirect("/compra/$id/edit")->with(['message' => 'Compra Actualizada con Exito.', 'alert' => 'alert-success']);
@@ -477,7 +479,8 @@ class CompraController extends Controller
        $updates->valor_final=  $valor_final;
        $updates-> id_empresa = $id_empresa;
        $updates-> id_usuario= auth()->user()->id;
-       $updates-> registro= $updated;
+       $updates-> fecha= $updated;
+       $updates-> descripcion= "Producto Modificado por Factura de Compra";
        $updates->save();
        
         return redirect("/compraDetalle/$id_compra")->with(['message' => 'Producto Agregado con Exito.', 'alert' => 'alert-success']);

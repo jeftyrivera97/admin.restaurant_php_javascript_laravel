@@ -13,13 +13,15 @@ return new class extends Migration
     {
         Schema::create('updates', function (Blueprint $table) {
             $table->id();
+            $table->dateTimeTz('fecha', precision: 0);
             $table->string('tabla');
             $table->string('codigo');
+            $table->string('descripcion')->nullable();
             $table->longText('valor_inicial');
             $table->longText('valor_final');
             $table->foreignId('id_empresa')->references('id')->on('empresas');
             $table->foreignId('id_usuario')->references('id')->on('users');
-            $table->dateTimeTz('registro', precision: 0);
+           
         });
     }
 

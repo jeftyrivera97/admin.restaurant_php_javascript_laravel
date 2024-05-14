@@ -136,13 +136,15 @@ class ClienteController extends Controller
 
         $valor_final= Cliente::where("id","$id")->get();
         $updates = new Update;
+        $updates-> fecha= $updated;
+        $updates-> descripcion= "Cliente Modificado";
         $updates->tabla= "Clientes";
         $updates->codigo= $clientes->id;
         $updates->valor_inicial= $valor_inicial;
         $updates->valor_final=  $valor_final;
         $updates->id_empresa=  $id_empresa;
         $updates-> id_usuario= auth()->user()->id;
-        $updates-> registro= $updated;
+      
         $updates->save();
 
       

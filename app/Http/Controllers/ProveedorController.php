@@ -156,7 +156,8 @@ class ProveedorController extends Controller
        $updates->valor_final=  $valor_final;
        $updates-> id_empresa = $id_empresa;
        $updates-> id_usuario= auth()->user()->id;
-       $updates-> registro= $updated;
+       $updates-> fecha= $updated;
+       $updates-> descripcion= "Proveedor Modificado";
        $updates->save();
 
 

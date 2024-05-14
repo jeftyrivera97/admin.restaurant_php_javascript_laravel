@@ -266,7 +266,8 @@ class PlanillaController extends Controller
         $updates->valor_final=  $valor_finalG;
         $updates-> id_empresa = $id_empresa;
         $updates-> id_usuario= auth()->user()->id;
-        $updates-> registro= $updated;
+        $updates-> fecha= $updated;
+        $updates-> descripcion= "Gasto Modificado";
         $updates->save();
 
         $updates = new Update;
@@ -276,7 +277,8 @@ class PlanillaController extends Controller
         $updates->valor_final=  $valor_finalP;
         $updates-> id_empresa = $id_empresa;
         $updates-> id_usuario= auth()->user()->id;
-        $updates-> registro= $updated;
+        $updates-> fecha= $updated;
+        $updates-> descripcion= "Planilla Modificada";
         $updates->save();
 
         return redirect("/planilla/$id/edit")->with(['message' => 'Planilla Actualizada con Exito!', 'alert' => 'alert-success']);

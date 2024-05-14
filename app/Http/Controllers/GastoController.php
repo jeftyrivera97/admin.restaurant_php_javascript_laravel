@@ -212,7 +212,8 @@ class GastoController extends Controller
         $updates->valor_final=  $valor_final;
         $updates-> id_empresa = $id_empresa;
         $updates-> id_usuario= auth()->user()->id;
-        $updates-> registro= $updated;
+        $updates-> fecha= $updated;
+        $updates-> descripcion= "Gasto Modificado";
         $updates->save();
 
         return redirect("/gasto/$id/edit")->with(['message' => 'Gasto Actualizado con Exito!', 'alert' => 'alert-success']);

@@ -215,7 +215,8 @@ class ProductoController extends Controller
         $updates->valor_final=  $valor_final;
         $updates-> id_empresa = $id_empresa;
         $updates-> id_usuario= auth()->user()->id;
-        $updates-> registro= $updated;
+        $updates-> fecha= $updated;
+        $updates-> descripcion= "Producto Modificado";
         $updates->save();
 
         return redirect("/producto/$id/edit")->with(['message' => 'Producto Actualizado con Exito!', 'alert' => 'alert-success']);
