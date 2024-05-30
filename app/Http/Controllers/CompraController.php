@@ -111,9 +111,6 @@ class CompraController extends Controller
             $categorias = CompraCategoria::where('id_estado',1)->where('id','>','7')->get();
         }
 
-       
-
-
         return view('compra.create', compact('proveedores','categorias'));
     }
 

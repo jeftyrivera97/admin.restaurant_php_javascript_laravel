@@ -38,8 +38,17 @@ class EmpleadoController extends Controller
         }
 
         $id_usuario= auth()->user()->id;
+        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
+            $id_empresa=1;
+            $categorias = EmpleadoCategoria::where('id_estado',1)->where('id','<=','8')->get();
 
-        return view('empleado.create', compact('id_usuario'));
+        }
+        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
+            $id_empresa=2;
+            $categorias = EmpleadoCategoria::where('id_estado',1)->where('id','>','4')->get();
+        }
+
+        return view('empleado.create', compact('id_usuario','categorias'));
     }
 
     /**
@@ -54,7 +63,7 @@ class EmpleadoController extends Controller
         $validatedData = $request->validate([
              'codigo_empleado' => 'required',
              'nombre' => 'required',
-             'puesto' => 'required',
+             'id_categoria' => 'required',
              'telefono' => 'required|numeric|min:8',
          ]);
 
@@ -72,7 +81,7 @@ class EmpleadoController extends Controller
         $empleados-> codigo_empleado = $request->codigo_empleado;
         $empleados-> descripcion = $request->nombre;
         $empleados-> telefono = $request->telefono;
-        $empleados-> puesto = $request->puesto;
+        $empleados-> id_categoria = $request->id_categoria;
         $empleados-> id_estado= 1;
         $empleados-> id_empresa = $id_empresa;
         $empleados-> id_usuario= auth()->user()->id;
@@ -102,7 +111,19 @@ class EmpleadoController extends Controller
         }
         $empleado= Empleado::find($id);
         $id_usuario= auth()->user()->id;
-        return view('empleado.edit', compact('empleado','id_usuario'));
+        $id_usuario= auth()->user()->id;
+        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
+            $id_empresa=1;
+            $categorias = EmpleadoCategoria::where('id_estado',1)->where('id','<=','8')->get();
+
+        }
+        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
+            $id_empresa=2;
+            $categorias = EmpleadoCategoria::where('id_estado',1)->where('id','>','4')->get();
+        }
+
+
+        return view('empleado.edit', compact('empleado','id_usuario','categorias'));
     }
 
     /**
@@ -135,7 +156,7 @@ class EmpleadoController extends Controller
         $empleados-> codigo_empleado = $request->codigo_empleado;
         $empleados-> descripcion = $request->nombre;
         $empleados-> telefono = $request->telefono;
-        $empleados-> puesto = $request->puesto;
+        $empleados-> id_categoria = $request->id_categoria;
         $empleados-> id_estado= 1;
         $empleados-> updated= $updated;
         $empleados->save();

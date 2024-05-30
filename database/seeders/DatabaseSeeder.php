@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             CompraCategoriaSeeder::class,
             IngresoCategoriaSeeder::class,
             ProductoCategoriaSeeder::class,
+            EmpleadoCategoriaSeeder::class,
 
         ]);
     }

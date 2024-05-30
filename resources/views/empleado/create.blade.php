@@ -66,23 +66,11 @@
                         </div>
                         <div class="grid md:grid-cols-2 md:gap-6">
                             <div class="relative z-0 w-full mb-6 group">
-                                <select id="puesto" name="puesto" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.0 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                                    <option value="">  *Seleccione Area de Puesto</option>
-                                    <option value="Administracion">Administracion</option>
-                                    <option value="Administracion">Contador</option>
-                                    <option value="Gerencia">Gerencia</option>
-                                    @if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 )  
-                                        <option value="Cocina">Cocina</option>
-                                        <option value="Mesero">Mesero</option>
-                                        <option value="Guardia de Seguridad">Guardia de Seguridad</option>
-                                    @endif
-                                    @if($id_usuario==4 or $id_usuario==5 or $id_usuario==6 )
-                                    <option value="Mecanico Supervisor">Mecanico Supervisor</option>
-                                    <option value="Mecanico General">Mecanico General</option>
-                                    <option value="Mecanico Ayudante">Mecanico Ayudante</option>
-                                    <option value="Soldador">Soldador</option>
-                                    <option value="Electricista">Electricista</option>
-                                    @endif
+                                <select id="id_categoria" name="id_categoria" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.0 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                                    <option value=""> *Seleccione Categoria del Puesto</option>
+                                    @foreach ($categorias as $categoria)
+                                    <option value="{{$categoria->id}}">{{ $categoria->descripcion }}</option>
+                                    @endforeach
                                   </select>
                             </div>
                             <div class="relative z-0 w-full mb-6 group">

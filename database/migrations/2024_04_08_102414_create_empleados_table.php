@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('codigo_empleado')->unique();
             $table->string('descripcion');
-            $table->string('puesto');
+            $table->foreignId('id_categoria')->references('id')->on('empleado_categorias');
             $table->string('telefono');
             $table->foreignId('id_empresa')->references('id')->on('empresas');
             $table->foreignId('id_estado')->references('id')->on('estados');
