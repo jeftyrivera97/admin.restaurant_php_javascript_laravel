@@ -20,42 +20,55 @@ class EmpleadoCategoriaSeeder extends Seeder
        
         DB::table('empleado_categorias')->insert([
             'descripcion' => 'Cocinero',
+            'id_estado' => '1',
         ]);
         DB::table('empleado_categorias')->insert([
             'descripcion' => 'Mesero',
+            'id_estado' => '1',
         ]);
         DB::table('empleado_categorias')->insert([
             'descripcion' => 'Bartender',
+            'id_estado' => '1',
         ]);
         DB::table('empleado_categorias')->insert([
             'descripcion' => 'Cajero',
+            'id_estado' => '1',
         ]);
         DB::table('empleado_categorias')->insert([
             'descripcion' => 'Aseador',
+            'id_estado' => '1',
         ]);
         DB::table('empleado_categorias')->insert([
             'descripcion' => 'Guardia de Seguridad',
+            'id_estado' => '1',
         ]);
         DB::table('empleado_categorias')->insert([
             'descripcion' => 'Administracion',
+            'id_estado' => '1',
         ]);
         DB::table('empleado_categorias')->insert([
             'descripcion' => 'Gerencia',
+            'id_estado' => '1',
         ]);
         DB::table('empleado_categorias')->insert([
             'descripcion' => 'Mecanico Supervisor',
+            'id_estado' => '1',
         ]);
         DB::table('empleado_categorias')->insert([
             'descripcion' => 'Mecanico General',
+            'id_estado' => '1',
         ]);
         DB::table('empleado_categorias')->insert([
             'descripcion' => 'Mecanico Auxiliar',
+            'id_estado' => '1',
         ]);
         DB::table('empleado_categorias')->insert([
             'descripcion' => 'Electricista',
+            'id_estado' => '1',
         ]);
         DB::table('empleado_categorias')->insert([
             'descripcion' => 'Soldador',
+            'id_estado' => '1',
         ]);
     }
 }

@@ -18,6 +18,11 @@ class Empleado extends Model
     }
     public function estado(): BelongsTo
     {
-        return $this->belongsTo(Estado::class);
+        return $this->belongsTo('App\Models\Estado', 'id_estado');
+    }
+
+    public function categoria()
+    {
+        return $this->belongsTo('App\Models\EmpleadoCategoria', 'id_categoria');
     }
 }

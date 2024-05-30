@@ -24,12 +24,12 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Gerencia Lunas',
             'email' => 'gerencia.lunas@hotmail.com',
-            'password' => Hash::make('Pontiac2016'),
+            'password' => Hash::make('Gerencia2024'),
         ]);
         DB::table('users')->insert([
             'name' => 'Admin Lunas',
             'email' => 'admin.lunas@hotmail.com',
-            'password' => Hash::make('Pontiac2016'),
+            'password' => Hash::make('Admin2024'),
         ]);
         DB::table('users')->insert([
             'name' => 'Sistema Admin Taller',
@@ -39,12 +39,12 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Gerencia Taller',
             'email' => 'gerencia.taller@hotmail.com',
-            'password' => Hash::make('Pontiac2016'),
+            'password' => Hash::make('Gerencia2024'),
         ]);
         DB::table('users')->insert([
             'name' => 'Admin Taller',
             'email' => 'admin.taller@hotmail.com',
-            'password' => Hash::make('Pontiac2016'),
+            'password' => Hash::make('Admin2024'),
         ]);
     }
 }

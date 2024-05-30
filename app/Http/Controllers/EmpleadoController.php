@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Empleado;
 use App\Models\Update;
+use App\Models\EmpleadoCategoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
@@ -138,7 +139,7 @@ class EmpleadoController extends Controller
         $validatedData = $request->validate([
              'codigo_empleado' => 'required',
              'nombre' => 'required',
-             'puesto' => 'required',
+             'id_categoria' => 'required',
              'telefono' => 'required|numeric|min:8',
          ]);
          $id_usuario= auth()->user()->id;

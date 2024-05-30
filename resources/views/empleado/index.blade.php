@@ -46,7 +46,7 @@
                                         {{$empleado->codigo_empleado}}
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{$empleado->puesto}}
+                                        {{$empleado->categoria->descripcion}}
                                     </td>
                                     <td class="px-6 py-4">
                                         @if ($empleado->telefono === NULL)
