@@ -18,22 +18,22 @@ class EmpresaSeeder extends Seeder
         DB::table('empresas')->insert([
             'codigo_empresa' => '0101',
             'descripcion' => 'Lunas Restaurant',
-            'razon_social' => 'Inversiones Lunas',
-            'direccion' => 'El Porvenir',
+            'razon_social' => 'Inversiones Guevara',
+            'direccion' => 'El Porvenir, Frente La Playa',
             'telefono' => '88996633',
-            'correo' => 'lunas@gmail.com',
+            'correo' => 'lunasrestaurant@gmail.com',
             'cai' => '025698545',
             'id_estado' => 1,
         ]);
 
         DB::table('empresas')->insert([
             'codigo_empresa' => '0102',
-            'descripcion' => 'Taller Saesa',
-            'razon_social' => 'Inversiones Saesa',
-            'direccion' => 'La Ceiba',
+            'descripcion' => 'Taller taesa',
+            'razon_social' => 'Inversiones Guevara',
+            'direccion' => 'La Ceiba, Barrio Alvarado',
             'telefono' => '88996633',
-            'correo' => 'taller@gmail.com',
-            'cai' => '025698545',
+            'correo' => 'taesa@gmail.com',
+            'cai' => '010115556366',
             'id_estado' => 1,
         ]);
     }
