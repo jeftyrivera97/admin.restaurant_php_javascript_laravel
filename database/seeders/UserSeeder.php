@@ -17,18 +17,18 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             'name' => 'Sistema Lunas Restaurant',
-            'email' => 'sistema@lunas.site',
+            'email' => 'sistema@rlunas.site',
             'password' => Hash::make('Jriver@1997'),
         ]);
         DB::table('users')->insert([
             'name' => 'Victor Guevara Lunas Restaurant',
-            'email' => 'gerencia@lunas.site',
+            'email' => 'gerencia@rlunas.site',
             'password' => Hash::make('G3r3nc1@.2024'),
         ]);
         DB::table('users')->insert([
             'name' => 'Admininistracion Lunas',
-            'email' => 'admin@glunas.site',
-            'password' => Hash::make('@dm1n7u@s.2024'),
+            'email' => 'admin@rlunas.site',
+            'password' => Hash::make('@dm1n.2024'),
         ]);
         DB::table('users')->insert([
             'name' => 'Sistema Taller Taesa',
@@ -43,7 +43,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Administracion Taller Taesa',
             'email' => 'admin@taesa.site',
-            'password' => Hash::make('G3r3n1@.2024'),
+            'password' => Hash::make('@dm1n.2024'),
         ]);
     }
 }
