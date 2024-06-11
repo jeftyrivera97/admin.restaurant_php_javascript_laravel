@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('productos', function (Blueprint $table) {
             $table->id();
-            $table->string('codigo_producto')->unique();
+            $table->string('codigo_producto');
             $table->string('descripcion');
             $table->foreignId('id_categoria')->references('id')->on('producto_categorias');
             $table->double('stock');

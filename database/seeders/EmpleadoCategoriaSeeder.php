@@ -17,13 +17,12 @@ class EmpleadoCategoriaSeeder extends Seeder
      */
     public function run(): void
     {
-       
         DB::table('empleado_categorias')->insert([
-            'descripcion' => 'Cocinero',
+            'descripcion' => 'Administracion',
             'id_estado' => '1',
         ]);
         DB::table('empleado_categorias')->insert([
-            'descripcion' => 'Mesero',
+            'descripcion' => 'Aseador',
             'id_estado' => '1',
         ]);
         DB::table('empleado_categorias')->insert([
@@ -35,7 +34,11 @@ class EmpleadoCategoriaSeeder extends Seeder
             'id_estado' => '1',
         ]);
         DB::table('empleado_categorias')->insert([
-            'descripcion' => 'Aseador',
+            'descripcion' => 'Cocinero',
+            'id_estado' => '1',
+        ]);
+        DB::table('empleado_categorias')->insert([
+            'descripcion' => 'Gerencia',
             'id_estado' => '1',
         ]);
         DB::table('empleado_categorias')->insert([
@@ -43,12 +46,9 @@ class EmpleadoCategoriaSeeder extends Seeder
             'id_estado' => '1',
         ]);
         DB::table('empleado_categorias')->insert([
-            'descripcion' => 'Administracion',
+            'descripcion' => 'Mesero',
             'id_estado' => '1',
         ]);
-        DB::table('empleado_categorias')->insert([
-            'descripcion' => 'Gerencia',
-            'id_estado' => '1',
-        ]);
+      
     }
 }
