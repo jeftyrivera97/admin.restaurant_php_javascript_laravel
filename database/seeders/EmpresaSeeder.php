@@ -25,16 +25,5 @@ class EmpresaSeeder extends Seeder
             'cai' => '025698545',
             'id_estado' => 1,
         ]);
-
-        DB::table('empresas')->insert([
-            'codigo_empresa' => '0102',
-            'descripcion' => 'Taller taesa',
-            'razon_social' => 'Inversiones Guevara',
-            'direccion' => 'La Ceiba, Barrio Alvarado',
-            'telefono' => '88996633',
-            'correo' => 'taesa@gmail.com',
-            'cai' => '010115556366',
-            'id_estado' => 1,
-        ]);
     }
 }

@@ -17,14 +17,8 @@ class EmpleadoController extends Controller
     public function index()
     {
         $id_usuario= auth()->user()->id;
-        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
-            $id_empresa=1;
-        }
-        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
-            $id_empresa=2;
-        }
-
-        $empleados= Empleado::where("id_estado",1)->where('id_empresa',$id_empresa)->get();
+       
+        $empleados= Empleado::where("id_estado",1)->get();
         return view('empleado.index', compact('empleados'));
     }
 
@@ -39,15 +33,7 @@ class EmpleadoController extends Controller
         }
 
         $id_usuario= auth()->user()->id;
-        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
-            $id_empresa=1;
-            $categorias = EmpleadoCategoria::where('id_estado',1)->where('id','<=','8')->get();
-
-        }
-        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
-            $id_empresa=2;
-            $categorias = EmpleadoCategoria::where('id_estado',1)->where('id','>','4')->get();
-        }
+        $categorias = EmpleadoCategoria::where('id_estado',1)->get();
 
         return view('empleado.create', compact('id_usuario','categorias'));
     }
@@ -71,12 +57,7 @@ class EmpleadoController extends Controller
          
         $registro= now();
         $id_usuario= auth()->user()->id;
-        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
-            $id_empresa=1;
-        }
-        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
-            $id_empresa=2;
-        }
+        
 
         $empleados = new Empleado;
         $empleados-> codigo_empleado = $request->codigo_empleado;
@@ -84,7 +65,7 @@ class EmpleadoController extends Controller
         $empleados-> telefono = $request->telefono;
         $empleados-> id_categoria = $request->id_categoria;
         $empleados-> id_estado= 1;
-        $empleados-> id_empresa = $id_empresa;
+        $empleados-> id_empresa = 1;
         $empleados-> id_usuario= auth()->user()->id;
         $empleados-> registro= $registro;
         $empleados-> updated= $registro;
@@ -113,15 +94,10 @@ class EmpleadoController extends Controller
         $empleado= Empleado::find($id);
         $id_usuario= auth()->user()->id;
         $id_usuario= auth()->user()->id;
-        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
-            $id_empresa=1;
-            $categorias = EmpleadoCategoria::where('id_estado',1)->where('id','<=','8')->get();
+        
+        $categorias = EmpleadoCategoria::where('id_estado',1)->get();
 
-        }
-        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
-            $id_empresa=2;
-            $categorias = EmpleadoCategoria::where('id_estado',1)->where('id','>','4')->get();
-        }
+      
 
 
         return view('empleado.edit', compact('empleado','id_usuario','categorias'));
@@ -142,13 +118,8 @@ class EmpleadoController extends Controller
              'id_categoria' => 'required',
              'telefono' => 'required|numeric|min:8',
          ]);
-         $id_usuario= auth()->user()->id;
-        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
-            $id_empresa=1;
-        }
-        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
-            $id_empresa=2;
-        }
+        $id_usuario= auth()->user()->id;
+      
 
         $valor_inicial=  Empleado::where("id","$id")->get();
         $updated= now();
@@ -169,7 +140,7 @@ class EmpleadoController extends Controller
         $updates->codigo= $empleados->id;
         $updates->valor_inicial= $valor_inicial;
         $updates->valor_final=  $valor_final;
-        $updates-> id_empresa = $id_empresa;
+        $updates-> id_empresa =1;
         $updates-> id_usuario= auth()->user()->id;
         $updates-> fecha= $updated;
         $updates-> descripcion= "Empleado Modificado";

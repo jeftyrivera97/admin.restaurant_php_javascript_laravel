@@ -33,10 +33,6 @@ class IngresoCategoriaSeeder extends Seeder
             'id_estado' => '1',
         ]);
         DB::table('ingreso_categorias')->insert([
-            'descripcion' => 'Prestacion de Servicio',
-            'id_estado' => '1',
-        ]);
-        DB::table('ingreso_categorias')->insert([
             'descripcion' => 'Prestamo Personal',
             'id_estado' => '1',
         ]);

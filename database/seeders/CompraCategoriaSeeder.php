@@ -20,7 +20,7 @@ class CompraCategoriaSeeder extends Seeder
             'id_estado' => '1',
         ]);
         DB::table('compra_categorias')->insert([
-            'descripcion' => 'Compra de Alimentos Varios',
+            'descripcion' => 'Compra de Alimentos y Bebidas Varios',
             'id_estado' => '1',
         ]);
         DB::table('compra_categorias')->insert([
@@ -39,33 +39,6 @@ class CompraCategoriaSeeder extends Seeder
             'descripcion' => 'Compra de Bebidas no Alcoholicas',
             'id_estado' => '1',
         ]);
-        DB::table('compra_categorias')->insert([
-            'descripcion' => 'Compra de Bebidas Varios',
-            'id_estado' => '1',
-        ]);
-        DB::table('compra_categorias')->insert([
-            'descripcion' => 'Compra de Herramientas',
-            'id_estado' => '1',
-        ]);
-        DB::table('compra_categorias')->insert([
-            'descripcion' => 'Compra de Repuestos',
-            'id_estado' => '1',
-        ]);
-        DB::table('compra_categorias')->insert([
-            'descripcion' => 'Compra de Piezas Vehiculares',
-            'id_estado' => '1',
-        ]);
-        DB::table('compra_categorias')->insert([
-            'descripcion' => 'Compra de Aceites Automotriz',
-            'id_estado' => '1',
-        ]);
-        DB::table('compra_categorias')->insert([
-            'descripcion' => 'Compra de Liquidos Aditivos',
-            'id_estado' => '1',
-        ]);
-        DB::table('compra_categorias')->insert([
-            'descripcion' => 'Compra de Accesorios',
-            'id_estado' => '1',
-        ]);
+
     }
 }

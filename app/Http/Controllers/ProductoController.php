@@ -23,20 +23,14 @@ class ProductoController extends Controller
         }
 
         $id_usuario= auth()->user()->id;
-        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
-            $id_empresa=1;
-        }
-        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
-            $id_empresa=2;
-        }
-
+        
         $mes= now()->format('F');
         $numMes = now()->format('m');
         $mes= $this->obtenerMes($numMes);
         $año = now()->format('y');
         $fecha_inicial="$año-$numMes-01";
         $fecha_final="$año-$numMes-31";
-        $productos= Producto::where("id_estado",1)->where('id_empresa',$id_empresa)->get();
+        $productos= Producto::where("id_estado",1)->get();
         return view('producto.index', compact('productos','mes','año'));
     }
 
@@ -120,12 +114,7 @@ class ProductoController extends Controller
          ]);
 
          $id_usuario= auth()->user()->id;
-         if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
-             $id_empresa=1;
-         }
-         else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
-             $id_empresa=2;
-         }
+        
          
         $registro= now();
 
@@ -136,7 +125,7 @@ class ProductoController extends Controller
         $productos-> stock = $request->stock;
         $productos-> costo = $request->costo;
         $productos-> id_estado= 1;
-        $productos-> id_empresa = $id_empresa;
+        $productos-> id_empresa = 1;
         $productos-> id_usuario= auth()->user()->id;
         $productos-> registro= $registro;
         $productos-> updated= $registro;
@@ -185,12 +174,7 @@ class ProductoController extends Controller
          ]);
 
          $id_usuario= auth()->user()->id;
-         if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
-             $id_empresa=1;
-         }
-         else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
-             $id_empresa=2;
-         }
+        
          
         $updated= now();
         $valor_inicial=  Producto::where("id","$id")->get();
@@ -213,7 +197,7 @@ class ProductoController extends Controller
         $updates->codigo= $productos->id;
         $updates->valor_inicial= $valor_inicial;
         $updates->valor_final=  $valor_final;
-        $updates-> id_empresa = $id_empresa;
+        $updates-> id_empresa = 1;
         $updates-> id_usuario= auth()->user()->id;
         $updates-> fecha= $updated;
         $updates-> descripcion= "Producto Modificado";

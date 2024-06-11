@@ -30,20 +30,6 @@ class UserSeeder extends Seeder
             'email' => 'admin@rlunas.site',
             'password' => Hash::make('@dm1n.2024'),
         ]);
-        DB::table('users')->insert([
-            'name' => 'Sistema Taller Taesa',
-            'email' => 'sistema@taesa.site',
-            'password' => Hash::make('Jriver@1997'),
-        ]);
-        DB::table('users')->insert([
-            'name' => 'Victor Guevara Lunas Restaurant',
-            'email' => 'gerencia@taesa.site',
-            'password' => Hash::make('G3r3nc1@.2024'),
-        ]);
-        DB::table('users')->insert([
-            'name' => 'Administracion Taller Taesa',
-            'email' => 'admin@taesa.site',
-            'password' => Hash::make('@dm1n.2024'),
-        ]);
+      
     }
 }

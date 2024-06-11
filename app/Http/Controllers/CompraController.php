@@ -25,12 +25,7 @@ class CompraController extends Controller
             return redirect('/login');
         }
         $id_usuario= auth()->user()->id;
-        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
-            $id_empresa=1;
-        }
-        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
-            $id_empresa=2;
-        }
+     
 
         $mes= now()->format('F');
         $numMes = now()->format('m');
@@ -40,7 +35,7 @@ class CompraController extends Controller
         $fecha_final="$año-$numMes-31";
         $n;
         
-        $compras=Compra::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->where('id_empresa',$id_empresa)->get();
+        $compras=Compra::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->get();
         return view('compra.index', compact('compras','mes','año'));
     }
 
@@ -100,16 +95,8 @@ class CompraController extends Controller
             return redirect('/login');
         }
         $proveedores=Proveedor::where('id_estado','1')->get();
+        $categorias=CompraCategoria::where('id_estado',1)->get();
         $id_usuario= auth()->user()->id;
-        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
-            $id_empresa=1;
-            $categorias = CompraCategoria::where('id_estado',1)->where('id','<=','7')->get();
-
-        }
-        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
-            $id_empresa=2;
-            $categorias = CompraCategoria::where('id_estado',1)->where('id','>','7')->get();
-        }
 
         return view('compra.create', compact('proveedores','categorias'));
     }
@@ -131,13 +118,7 @@ class CompraController extends Controller
              'id_tipo_cuenta' => 'required|numeric',
          ]);
          $id_usuario= auth()->user()->id;
-        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
-            $id_empresa=1;
-        }
-        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
-            $id_empresa=2;
-        }
-
+      
          $gravado15= $request->gravado15;
          $gravado18= $request->gravado18;
          $impuesto15= $request->isv15;
@@ -185,7 +166,7 @@ class CompraController extends Controller
             $compras-> excento = $excento;
             $compras-> exonerado = $exonerado;
             $compras-> total = $total;
-            $compras-> id_empresa = $id_empresa;
+            $compras-> id_empresa =1;
             $compras-> id_usuario= auth()->user()->id;
             $compras-> registro= $registro;
             $compras-> updated= $registro;
@@ -213,7 +194,7 @@ class CompraController extends Controller
             $compras-> excento = $excento;
             $compras-> exonerado = $exonerado;
             $compras-> total = $total;
-            $compras-> id_empresa = $id_empresa;
+            $compras-> id_empresa = 1;
             $compras-> id_usuario= auth()->user()->id;
             $compras-> registro= $registro;
             $compras-> updated= $registro;
@@ -268,12 +249,7 @@ class CompraController extends Controller
         ]);
 
         $id_usuario= auth()->user()->id;
-        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
-            $id_empresa=1;
-        }
-        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
-            $id_empresa=2;
-        }
+      
          $gravado15= $request->gravado15;
          $gravado18= $request->gravado18;
          $impuesto15= $request->isv15;
@@ -334,7 +310,7 @@ class CompraController extends Controller
             $updates->codigo= $compras->id;
             $updates->valor_inicial= $valor_inicial;
             $updates->valor_final=  $valor_final;
-            $updates-> id_empresa = $id_empresa;
+            $updates-> id_empresa = 1;
             $updates-> id_usuario= auth()->user()->id;
             $updates-> fecha= $updated;
             $updates-> descripcion= "Compra Modificada";
@@ -373,7 +349,7 @@ class CompraController extends Controller
             $updates->codigo= $compras->id;
             $updates->valor_inicial= $valor_inicial;
             $updates->valor_final=  $valor_final;
-            $updates-> id_empresa = $id_empresa;
+            $updates-> id_empresa = 1;
             $updates-> id_usuario= auth()->user()->id;
             $updates-> fecha= $updated;
             $updates-> descripcion= "Compra Modificada";
@@ -461,12 +437,7 @@ class CompraController extends Controller
         }
 
         $id_usuario= auth()->user()->id;
-        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
-            $id_empresa=1;
-        }
-        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
-            $id_empresa=2;
-        }
+        
         
        $updated= now();
        $valor_inicial=Producto::where('id' ,$id_producto)->first();
@@ -487,7 +458,7 @@ class CompraController extends Controller
        $updates->codigo= $productos->id;
        $updates->valor_inicial= $valor_inicial;
        $updates->valor_final=  $valor_final;
-       $updates-> id_empresa = $id_empresa;
+       $updates-> id_empresa =1;
        $updates-> id_usuario= auth()->user()->id;
        $updates-> fecha= $updated;
        $updates-> descripcion= "Producto Modificado por Factura de Compra";

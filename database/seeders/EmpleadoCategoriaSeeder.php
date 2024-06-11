@@ -50,25 +50,5 @@ class EmpleadoCategoriaSeeder extends Seeder
             'descripcion' => 'Gerencia',
             'id_estado' => '1',
         ]);
-        DB::table('empleado_categorias')->insert([
-            'descripcion' => 'Mecanico Supervisor',
-            'id_estado' => '1',
-        ]);
-        DB::table('empleado_categorias')->insert([
-            'descripcion' => 'Mecanico General',
-            'id_estado' => '1',
-        ]);
-        DB::table('empleado_categorias')->insert([
-            'descripcion' => 'Mecanico Auxiliar',
-            'id_estado' => '1',
-        ]);
-        DB::table('empleado_categorias')->insert([
-            'descripcion' => 'Electricista',
-            'id_estado' => '1',
-        ]);
-        DB::table('empleado_categorias')->insert([
-            'descripcion' => 'Soldador',
-            'id_estado' => '1',
-        ]);
     }
 }

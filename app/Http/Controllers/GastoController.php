@@ -22,19 +22,14 @@ class GastoController extends Controller
             return redirect('/login');
         }
         $id_usuario= auth()->user()->id;
-        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
-            $id_empresa=1;
-        }
-        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
-            $id_empresa=2;
-        }
+    
         $mes= now()->format('F');
         $numMes = now()->format('m');
         $mes= $this->obtenerMes($numMes);
         $año = now()->format('y');
         $fecha_inicial="$año-$numMes-01";
         $fecha_final="$año-$numMes-31";
-        $gastos=Gasto::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->where('id_categoria','!=', 1)->where('id_empresa',$id_empresa)->get();
+        $gastos=Gasto::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->where('id_categoria','!=', 1)->get();
         return view('gasto.index', compact('gastos','mes','año'));
     }
 
@@ -119,12 +114,7 @@ class GastoController extends Controller
 
          $registro= now();
          $id_usuario= auth()->user()->id;
-        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
-            $id_empresa=1;
-        }
-        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
-            $id_empresa=2;
-        }
+      
 
         $gastos = new Gasto;
         $gastos-> codigo_gasto = $request->codigo_gasto;
@@ -132,7 +122,7 @@ class GastoController extends Controller
         $gastos-> descripcion = $request->descripcion;
         $gastos-> id_categoria = $request->id_categoria;
         $gastos-> total = $request->total;
-        $gastos-> id_empresa = $id_empresa;
+        $gastos-> id_empresa = 1;
         $gastos-> id_usuario= auth()->user()->id;
         $gastos-> registro= $registro;
         $gastos-> updated= $registro;
@@ -183,13 +173,7 @@ class GastoController extends Controller
          ]);
 
          $id_usuario= auth()->user()->id;
-        if($id_usuario==1 or $id_usuario==2 or $id_usuario==3 ){
-            $id_empresa=1;
-        }
-        else if($id_usuario==4 or $id_usuario==5 or $id_usuario==6){
-            $id_empresa=2;
-        }
-
+      
          $updated= now();
          $valor_inicial=  Gasto::where("id","$id")->get();
 
@@ -210,7 +194,7 @@ class GastoController extends Controller
         $updates->codigo= $request->id;
         $updates->valor_inicial= $valor_inicial;
         $updates->valor_final=  $valor_final;
-        $updates-> id_empresa = $id_empresa;
+        $updates-> id_empresa =1;
         $updates-> id_usuario= auth()->user()->id;
         $updates-> fecha= $updated;
         $updates-> descripcion= "Gasto Modificado";
