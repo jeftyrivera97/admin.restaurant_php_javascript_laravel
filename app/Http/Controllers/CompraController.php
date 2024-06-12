@@ -113,7 +113,7 @@ class CompraController extends Controller
         $validated = $request->validate([
              'codigo_compra' => 'required',
              'fecha' => 'required',
-             'total' => 'required|numeric|min:1',
+             'total' => 'required|numeric',
              'id_proveedor' => 'required',
              'id_tipo_cuenta' => 'required|numeric',
          ]);
@@ -136,15 +136,36 @@ class CompraController extends Controller
 
          $totalImpuestos= $gravado15+$gravado18+$impuesto15+$impuesto18+$excento+$exonerado;
 
-         if($total<$totalImpuestos){
-            return redirect("/compra/$id/edit")->with(['validacionTotal' => 'Valor del Total Erroneo.', 'alert' => 'alert-danger']);
+         if($total==0){
+            return redirect("/compra/create")->with(['validacionTotal' => 'Total no puede ser igual a 0.', 'alert' => 'alert-danger']);
          }
-         if($totalImpuestos!=$total){
-            return redirect('/compra/create')->with(['validacionTotal' => 'Valores de Impuestos Erroneos.', 'alert' => 'alert-danger']);
+         if($totalImpuestos==0){
+            return redirect("/compra/create")->with(['validacionTotal' => 'Impuestos no pueden ser iguales a 0.', 'alert' => 'alert-danger']);
          }
-   
-        
+         
 
+         if($totalImpuestos>$total){
+            return redirect("/compra/create")->with(['validacionTotal' => 'Impuestos mayores a Total.', 'alert' => 'alert-danger']);
+         }
+         if($totalImpuestos<$total){
+            return redirect("/compra/create")->with(['validacionTotal' => 'Impuestos menores a Total.', 'alert' => 'alert-danger']);
+         }
+         
+         if($totalImpuestos!=$total){
+            return redirect("/compra/create")->with(['validacionTotal' => 'Valores no suman el Total.', 'alert' => 'alert-danger']);
+         }
+
+         if($gravado15>0){
+            if($impuesto15>$gravado15){
+                return redirect("/compra/create")->with(['validacionTotal' => 'ISV 15% NO puede ser mayor a Gravado 15%.', 'alert' => 'alert-danger']);
+            }
+         }
+         if($gravado18>0){
+            if($impuesto18>$gravado18){
+                return redirect("/compra/create")->with(['validacionTotal' => 'ISV 18% NO puede ser mayor a Gravado 18%.', 'alert' => 'alert-danger']);
+            }
+         }
+        
          $registro= now();
          $tipoC= $request->id_tipo_cuenta;
     

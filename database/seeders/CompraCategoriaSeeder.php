@@ -24,6 +24,10 @@ class CompraCategoriaSeeder extends Seeder
             'id_estado' => '1',
         ]);
         DB::table('compra_categorias')->insert([
+            'descripcion' => 'Compra de Lacteos',
+            'id_estado' => '1',
+        ]);
+        DB::table('compra_categorias')->insert([
             'descripcion' => 'Compra de Pollos y Carne',
             'id_estado' => '1',
         ]);

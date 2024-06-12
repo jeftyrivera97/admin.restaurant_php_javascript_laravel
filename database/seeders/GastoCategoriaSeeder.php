@@ -149,7 +149,7 @@ class GastoCategoriaSeeder extends Seeder
             'id_estado' => '1',
         ]);
         DB::table('gasto_categorias')->insert([
-            'descripcion' => 'Trasnporte',
+            'descripcion' => 'Transporte',
             'id_estado' => '1',
         ]);
         DB::table('gasto_categorias')->insert([

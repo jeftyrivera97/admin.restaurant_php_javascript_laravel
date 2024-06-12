@@ -26,6 +26,10 @@ class EmpleadoCategoriaSeeder extends Seeder
             'id_estado' => '1',
         ]);
         DB::table('empleado_categorias')->insert([
+            'descripcion' => 'Ayudante de Cocina',
+            'id_estado' => '1',
+        ]);
+        DB::table('empleado_categorias')->insert([
             'descripcion' => 'Bartender',
             'id_estado' => '1',
         ]);

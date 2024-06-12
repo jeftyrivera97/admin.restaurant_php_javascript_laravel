@@ -73,7 +73,7 @@
                         <div class="grid md:grid-cols-2 md:gap-6">
                             <div class="relative z-0 w-full mb-6 group">
                                 <select id="id_categoria" name="id_categoria" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.0 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                                    <option value="{{ $gasto->id_categoria }}">  {{ $gasto->categoria->descripcion }}</option>
+                                    <option value="{{ $gasto->id_categoria }}" selected>  {{ $gasto->categoria->descripcion }}</option>
                                     @foreach ($categorias as $categoria)
                                     <option value="{{$categoria->id}}">{{ $categoria->descripcion }}</option>
                                     @endforeach

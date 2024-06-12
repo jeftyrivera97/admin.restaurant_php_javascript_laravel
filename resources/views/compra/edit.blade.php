@@ -58,7 +58,7 @@
                             </div>
                             <div class="relative z-0 w-full mb-6 group">
                                 <select id="id_proveedor" name="id_proveedor" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.0 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                                  <option select value="{{$compra->proveedor->id}}">{{$compra->proveedor->descripcion }} | R.T.N: {{ $compra->proveedor->codigo_proveedor }}</option>
+                                  <option value="{{$compra->proveedor->id}}"selected>{{$compra->proveedor->descripcion }} | R.T.N: {{ $compra->proveedor->codigo_proveedor }}</option>
                                   @foreach ($proveedores as $proveedor)
                                   <option value="{{$proveedor->id}}">{{ $proveedor->descripcion }} | R.T.N: {{ $proveedor->codigo_proveedor }}</option>
                                   @endforeach
@@ -68,7 +68,7 @@
                         <div class="grid md:grid-cols-2 md:gap-6">
                             <div class="relative z-0 w-full mb-6 group">
                                 <select id="id_tipo_cuenta" onchange="getOption()" name="id_tipo_cuenta" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.0 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                                <option select value="{{$compra->cuenta->id}}">{{$compra->cuenta->descripcion}}</option>
+                                <option value="{{$compra->cuenta->id}}" selected>{{$compra->cuenta->descripcion}}</option>
                                     <option value="1">Contado</option>
                                     <option value="2">Credito</option>
                                 </select>
@@ -81,7 +81,7 @@
                         <div class="grid md:grid-cols-2 md:gap-6">
                             <div class="relative z-0 w-full mb-6 group">
                                 <select id="id_categoria" name="id_categoria" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.0 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                                    <option select value="{{$compra->categoria->id}}">{{$compra->categoria->descripcion}}</option>
+                                    <option value="{{$compra->categoria->id}}" selected>{{$compra->categoria->descripcion}}</option>
                                     @foreach ($categorias as $categoria)
                                     <option value="{{$categoria->id}}">{{ $categoria->descripcion }}</option>
                                     @endforeach

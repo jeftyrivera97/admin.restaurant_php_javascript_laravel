@@ -92,7 +92,15 @@ class ProductoCategoriaSeeder extends Seeder
             'id_estado' => '1',
         ]);
         DB::table('producto_categorias')->insert([
+            'descripcion' => 'Quesos',
+            'id_estado' => '1',
+        ]);
+        DB::table('producto_categorias')->insert([
             'descripcion' => 'Mariscos',
+            'id_estado' => '1',
+        ]);
+        DB::table('producto_categorias')->insert([
+            'descripcion' => 'Mantequilla',
             'id_estado' => '1',
         ]);
         DB::table('producto_categorias')->insert([
