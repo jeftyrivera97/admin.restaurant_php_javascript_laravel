@@ -32,6 +32,14 @@ class CompraCategoriaSeeder extends Seeder
             'id_estado' => '1',
         ]);
         DB::table('compra_categorias')->insert([
+            'descripcion' => 'Compra de Pollos',
+            'id_estado' => '1',
+        ]);
+        DB::table('compra_categorias')->insert([
+            'descripcion' => 'Compra de Carnes',
+            'id_estado' => '1',
+        ]);
+        DB::table('compra_categorias')->insert([
             'descripcion' => 'Compra de Mariscos',
             'id_estado' => '1',
         ]);
@@ -40,7 +48,19 @@ class CompraCategoriaSeeder extends Seeder
             'id_estado' => '1',
         ]);
         DB::table('compra_categorias')->insert([
-            'descripcion' => 'Compra de Bebidas no Alcoholicas',
+            'descripcion' => 'Compra de Bebidas Gaseosas',
+            'id_estado' => '1',
+        ]);
+        DB::table('compra_categorias')->insert([
+            'descripcion' => 'Compra de Bebidas Varias',
+            'id_estado' => '1',
+        ]);
+        DB::table('compra_categorias')->insert([
+            'descripcion' => 'Compra de Granos',
+            'id_estado' => '1',
+        ]);
+        DB::table('compra_categorias')->insert([
+            'descripcion' => 'Compra de Articulos de Limpieza y Aseo',
             'id_estado' => '1',
         ]);
 

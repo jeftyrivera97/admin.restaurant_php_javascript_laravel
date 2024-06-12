@@ -21,7 +21,7 @@ class EmpresaSeeder extends Seeder
             'razon_social' => 'Inversiones Guevara',
             'direccion' => 'El Porvenir, Frente La Playa',
             'telefono' => '88996633',
-            'correo' => 'lunasrestaurant@gmail.com',
+            'correo' => 'admin@rlunas.site',
             'cai' => '025698545',
             'id_estado' => 1,
         ]);

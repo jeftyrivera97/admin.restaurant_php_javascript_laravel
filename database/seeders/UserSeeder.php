@@ -16,17 +16,17 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         DB::table('users')->insert([
-            'name' => 'Sistema Lunas Restaurant',
+            'name' => 'Sistema Restaurante Lunas',
             'email' => 'sistema@rlunas.site',
             'password' => Hash::make('Jriver@1997'),
         ]);
         DB::table('users')->insert([
-            'name' => 'Victor Guevara Lunas Restaurant',
+            'name' => 'Victor Gerencia Restaurante Lunas',
             'email' => 'gerencia@rlunas.site',
             'password' => Hash::make('G3r3nc1@.2024'),
         ]);
         DB::table('users')->insert([
-            'name' => 'Admininistracion Lunas',
+            'name' => 'Lesbia Administraciones Restaurante Lunas',
             'email' => 'admin@rlunas.site',
             'password' => Hash::make('@dm1n.2024'),
         ]);
