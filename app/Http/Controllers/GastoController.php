@@ -30,7 +30,9 @@ class GastoController extends Controller
         $fecha_inicial="$año-$numMes-01";
         $fecha_final="$año-$numMes-31";
         $gastos=Gasto::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->where('id_categoria','!=', 1)->get();
-        return view('gasto.index', compact('gastos','mes','año'));
+        $registros= Gasto::where('fecha', '>=', "$año-01-01")->where('fecha', '<=', "$año-12-31")->orderBy('fecha')->get();
+
+        return view('gasto.index', compact('gastos','mes','año','registros'));
     }
 
     public static function obtenerMes($n){

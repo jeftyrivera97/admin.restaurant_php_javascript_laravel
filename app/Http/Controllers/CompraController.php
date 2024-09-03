@@ -33,10 +33,10 @@ class CompraController extends Controller
         $año = now()->format('y');
         $fecha_inicial="$año-$numMes-01";
         $fecha_final="$año-$numMes-31";
-        $n;
+        $registros= Compra::where('fecha', '>=', "$año-01-01")->where('fecha', '<=', "$año-12-31")->orderBy('fecha')->get();
         
         $compras=Compra::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->get();
-        return view('compra.index', compact('compras','mes','año'));
+        return view('compra.index', compact('compras','mes','año','registros'));
     }
 
     public static function obtenerMes($n){

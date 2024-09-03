@@ -32,7 +32,9 @@ class PlanillaController extends Controller
         $fecha_inicial="$año-$numMes-01";
         $fecha_final="$año-$numMes-31";
         $planillas=Planilla::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->get();
-        return view('planilla.index', compact('planillas','mes','año'));
+        $registros= Planilla::where('fecha', '>=', "$año-01-01")->where('fecha', '<=', "$año-12-31")->orderBy('fecha')->get();
+
+        return view('planilla.index', compact('planillas','mes','año','registros'));
 
     }
 

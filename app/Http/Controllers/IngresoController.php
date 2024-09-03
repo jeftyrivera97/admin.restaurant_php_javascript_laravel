@@ -33,7 +33,9 @@ class IngresoController extends Controller
         $fecha_inicial="$año-$numMes-01";
         $fecha_final="$año-$numMes-31";
         $ingresos=Ingreso::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->get();
-        return view('ingreso.index', compact('ingresos','mes','año'));
+        $registros= Ingreso::where('fecha', '>=', "$año-01-01")->where('fecha', '<=', "$año-12-31")->orderBy('fecha')->get();
+
+        return view('ingreso.index', compact('ingresos','mes','año','registros'));
     }
 
     public static function obtenerMes($n){
