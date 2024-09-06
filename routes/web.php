@@ -9,6 +9,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProveedorController;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,19 +33,11 @@ Route::resource('empleado', EmpleadoController::class);
 Route::resource('cliente', ClienteController::class);
 Route::resource('proveedor', ProveedorController::class);
 
+Route::get('/user/{id}', [UserController::class, 'show']);
 
-Route::get('/', function () {
-    if(!Auth::check())
-    {
-        return redirect('/login');
-    }else{
-        return view('dashboard');
-    }
-});
+Route::get('/', [DashboardController::class, 'show'])->middleware(['auth', 'verified'])->name('/');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'show'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/compraDetalle/{id}', [CompraController::class, 'detalle'])->middleware(['auth', 'verified'])->name('compraDetalle');
 Route::post('/storeDetalle', [CompraController::class, 'storeDetalle'])->middleware(['auth', 'verified'])->name('storeDetalle');

@@ -25,6 +25,7 @@ class CompraController extends Controller
             return redirect('/login');
         }
         $id_usuario= auth()->user()->id;
+        $id_empresa=1;
      
 
         $mes= now()->format('F');
@@ -33,10 +34,44 @@ class CompraController extends Controller
         $año = now()->format('y');
         $fecha_inicial="$año-$numMes-01";
         $fecha_final="$año-$numMes-31";
-        $registros= Compra::where('fecha', '>=', "$año-01-01")->where('fecha', '<=', "$año-12-31")->orderBy('fecha')->get();
+
+        if($numMes== 1){
+            $numMesA=12;
+            $añoA= $año-1;
+        }else{
+            $numMesA = $numMes-1;
+            $añoA= $año;
+        }
+
+        $registros=Compra::where('fecha', '>=', "$año-01-01")->where('fecha', '<=', "$año-12-31")->orderBy('fecha')->get();
+
+        $totalMes=Compra::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->sum('total');
+
+        $comprasAnual=Compra::where('fecha', '>=',"$año-01-01")->where('fecha', '<=', "$año-12-31")->sum('total');
+        $comprasAnual = number_format($comprasAnual, 2);
+        $comprasAnual= "L. $comprasAnual ";
+
+        $mesAnterior=Compra::where('fecha', '>=', "$añoA-$numMesA-01")->where('fecha', '<=', "$añoA-$numMesA-31")->sum('total');
+        $mesAnterior = number_format($mesAnterior, 2);
+        $mesAnterior= "L. $mesAnterior ";
+        
+        $promedioSemanal= $totalMes/4.5;
+        $promedioSemanal = number_format($promedioSemanal, 2);
+        $promedioSemanal= "L. $promedioSemanal ";
+        $totalMes = number_format($totalMes, 2);
+        $totalMes= "L. $totalMes ";
+
+        $comprasContado= Compra::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->where('id_tipo_cuenta',1)->sum('total');
+        $comprasCredito= Compra::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->where('id_tipo_cuenta',2)->sum('total');
+
+        $comprasContado = number_format($comprasContado, 2);
+        $comprasContado= "L. $comprasContado ";
+        $comprasCredito = number_format($comprasCredito, 2);
+        $comprasCredito= "L. $comprasCredito ";
+
         
         $compras=Compra::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->get();
-        return view('compra.index', compact('compras','mes','año','registros'));
+        return view('compra.index', compact('compras','mes','año','registros','comprasAnual','totalMes','promedioSemanal','mesAnterior','comprasContado','comprasCredito'));
     }
 
     public static function obtenerMes($n){

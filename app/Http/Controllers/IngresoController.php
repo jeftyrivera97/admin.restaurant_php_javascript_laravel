@@ -30,12 +30,36 @@ class IngresoController extends Controller
         $numMes = now()->format('m');
         $mes= $this->obtenerMes($numMes);
         $año = now()->format('y');
+        if($numMes== 1){
+            $numMesA=12;
+            $añoA= $año-1;
+        }else{
+            $numMesA = $numMes-1;
+            $añoA= $año;
+        }
+        
         $fecha_inicial="$año-$numMes-01";
         $fecha_final="$año-$numMes-31";
         $ingresos=Ingreso::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->get();
         $registros= Ingreso::where('fecha', '>=', "$año-01-01")->where('fecha', '<=', "$año-12-31")->orderBy('fecha')->get();
 
-        return view('ingreso.index', compact('ingresos','mes','año','registros'));
+        $totalMes=  Ingreso::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->sum('total');
+
+        $ingresosAnual=Ingreso::where('fecha', '>=',"$año-01-01")->where('fecha', '<=', "$año-12-31")->sum('total');
+        $ingresosAnual = number_format($ingresosAnual, 2);
+        $ingresosAnual= "L. $ingresosAnual ";
+
+        $mesAnterior=Ingreso::where('fecha', '>=', "$añoA-$numMesA-01")->where('fecha', '<=', "$añoA-$numMesA-31")->sum('total');
+        $mesAnterior = number_format($mesAnterior, 2);
+        $mesAnterior= "L. $mesAnterior ";
+        
+        $promedioSemanal= $totalMes/4.5;
+        $promedioSemanal = number_format($promedioSemanal, 2);
+        $promedioSemanal= "L. $promedioSemanal ";
+        $totalMes = number_format($totalMes, 2);
+        $totalMes= "L. $totalMes ";
+
+        return view('ingreso.index', compact('ingresos','mes','año','registros','ingresosAnual','totalMes','promedioSemanal','mesAnterior'));
     }
 
     public static function obtenerMes($n){

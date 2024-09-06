@@ -27,12 +27,38 @@ class GastoController extends Controller
         $numMes = now()->format('m');
         $mes= $this->obtenerMes($numMes);
         $año = now()->format('y');
+        
+        if($numMes== 1){
+            $numMesA=12;
+            $añoA= $año-1;
+        }else{
+            $numMesA = $numMes-1;
+            $añoA= $año;
+        }
+
         $fecha_inicial="$año-$numMes-01";
         $fecha_final="$año-$numMes-31";
         $gastos=Gasto::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->where('id_categoria','!=', 1)->get();
         $registros= Gasto::where('fecha', '>=', "$año-01-01")->where('fecha', '<=', "$año-12-31")->orderBy('fecha')->get();
 
-        return view('gasto.index', compact('gastos','mes','año','registros'));
+        $totalMes=  Gasto::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->sum('total');
+
+        $gastosAnual=Gasto::where('fecha', '>=',"$año-01-01")->where('fecha', '<=', "$año-12-31")->sum('total');
+        $gastosAnual = number_format($gastosAnual, 2);
+        $gastosAnual= "L. $gastosAnual ";
+
+        $mesAnterior=Gasto::where('fecha', '>=', "$añoA-$numMesA-01")->where('fecha', '<=', "$añoA-$numMesA-31")->sum('total');
+        $mesAnterior = number_format($mesAnterior, 2);
+        $mesAnterior= "L. $mesAnterior ";
+        
+        $promedioSemanal= $totalMes/4.5;
+        $promedioSemanal = number_format($promedioSemanal, 2);
+        $promedioSemanal= "L. $promedioSemanal ";
+        $totalMes = number_format($totalMes, 2);
+        $totalMes= "L. $totalMes ";
+
+    
+        return view('gasto.index', compact('gastos','mes','año','registros','gastosAnual','totalMes','promedioSemanal','mesAnterior'));
     }
 
     public static function obtenerMes($n){
