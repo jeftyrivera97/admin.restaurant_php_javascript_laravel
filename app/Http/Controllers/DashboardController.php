@@ -41,7 +41,13 @@ class DashboardController extends Controller
         if($egresosMes==0){$egresosMes=0.01;}
         if($ingresosMes==0){$ingresosMes=0.01;}
 
+        if($egresosAnual==0){$egresosAnual=0.01;}
+        if($ingresosAnual==0){$ingresosAnual=0.01;}
+
+
         $p=100;
+
+
         $pBalanceAnual= ($egresosAnual*$p)/$ingresosAnual;
         $pBalanceMes= ($egresosMes*$p)/$ingresosMes;
 
@@ -50,17 +56,17 @@ class DashboardController extends Controller
 
         if($balanceMes>0.1){
             $balanceMes = number_format($balanceMes, 2);
-            $balanceMes= "L. $balanceMes +POSITIVO";
+            $balanceMes= "$balanceMes +POSITIVO";
         }else{
             $balanceMes = number_format($balanceMes, 2);
-            $balanceMes= "L. $balanceMes -NEGATIVO";
+            $balanceMes= "$balanceMes -NEGATIVO";
         }
         if($balanceAnual>0.1){
             $balanceAnual = number_format($balanceAnual, 2);
-            $balanceAnual= "L. $balanceAnual +POSITIVO";
+            $balanceAnual= "$balanceAnual +POSITIVO";
         }else{
             $balanceAnual = number_format($balanceAnual, 2);
-            $balanceAnual= "L. $balanceAnual -NEGATIVO";
+            $balanceAnual= "$balanceAnual -NEGATIVO";
         }
 
         $ingresosMes = number_format($ingresosMes, 2);
