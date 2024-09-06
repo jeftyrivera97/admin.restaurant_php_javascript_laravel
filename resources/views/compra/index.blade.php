@@ -154,7 +154,63 @@
                             </tbody>
                         </table>
                     </div>
+                    <br>
+                    <b><span> Compras por Proveedor {{  $mes }} del 20{{  $año }}: </span></b>
+                        <div class="relative overflow-x-auto">
+                            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3">
+                                            Proveedor
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Total
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($comprasProveedores as $c)
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            {{ $c['descripcion'] }}
+                                        </th>
+                                        <td class="px-6 py-4">
+                                            L. {{number_format($c['total'], 2)}}
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     <br><br>
+                    <b><span> Compras por Categoria {{  $mes }} del 20{{  $año }}: </span></b>
+                    <div class="relative overflow-x-auto">
+                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">
+                                        Categoria
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Total
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($comprasCategorias as $c)
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {{ $c['descripcion'] }}
+                                    </th>
+                                    <td class="px-6 py-4">
+                                        L. {{number_format($c['total'], 2)}}
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                <br><br>
                     <p class="text-lg text-gray-900 dark:text-white">Compras del 20{{ $año }}</p>
                     <p class="text-sm text-gray-900 dark:text-white">{{count($registros)}} Registros</p>
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">

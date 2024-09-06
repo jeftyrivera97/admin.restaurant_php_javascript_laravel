@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Arr;
 
 class GastoController extends Controller
 {
@@ -22,6 +23,7 @@ class GastoController extends Controller
             return redirect('/login');
         }
         $id_usuario= auth()->user()->id;
+        $id_empresa=1;
     
         $mes= now()->format('F');
         $numMes = now()->format('m');
@@ -57,8 +59,28 @@ class GastoController extends Controller
         $totalMes = number_format($totalMes, 2);
         $totalMes= "L. $totalMes ";
 
-    
-        return view('gasto.index', compact('gastos','mes','año','registros','gastosAnual','totalMes','promedioSemanal','mesAnterior'));
+        $gastosCategorias=[];
+        $categorias= GastoCategoria::all();
+        $contador= count($categorias);
+
+        for($i=0; $i<$contador; $i++)
+        {
+           $id= $categorias[$i]->id;
+           $d= $categorias[$i]->descripcion;
+
+           $total= Gasto::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->where('id_empresa',$id_empresa)->sum('total');
+           if($totalGasto= Gasto::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->where('id_categoria',$id)->where('id_empresa',$id_empresa)->sum('total')){
+            $p= ($totalGasto*100)/$total;
+            $p = number_format($p, 2, '.', '');
+            $descripcion= "$d | $p%";
+            $gastosCategorias[$i] = Arr::add(['descripcion' => $descripcion], 'total', $totalGasto);
+           }
+        }
+        $columns = array_column($gastosCategorias, 'total');
+        array_multisort($columns, SORT_DESC, $gastosCategorias);
+
+
+        return view('gasto.index', compact('gastos','mes','año','registros','gastosAnual','totalMes','promedioSemanal','mesAnterior','gastosCategorias'));
     }
 
     public static function obtenerMes($n){

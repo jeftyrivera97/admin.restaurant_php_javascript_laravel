@@ -10,6 +10,7 @@ use App\Models\GastoPlanilla;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Arr;
 
 class PlanillaController extends Controller
 {
@@ -24,6 +25,7 @@ class PlanillaController extends Controller
         }
 
         $id_usuario= auth()->user()->id;
+        $id_empresa=1;
 
         $mes= now()->format('F');
         $numMes = now()->format('m');
@@ -60,7 +62,28 @@ class PlanillaController extends Controller
         $totalMes = number_format($totalMes, 2);
         $totalMes= "L. $totalMes ";
 
-        return view('planilla.index', compact('planillas','mes','año','registros','planillasAnual','totalMes','promedioSemanal','mesAnterior'));
+        $planillaEmpleados=[];
+        $empleados= Empleado::where('id_empresa',$id_empresa)->get();
+        $contador= count($empleados);
+
+        for($i=0; $i<$contador; $i++)
+        {
+           $id= $empleados[$i]->id;
+           $d= $empleados[$i]->descripcion;
+
+           $total= Planilla::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->where('id_empresa',$id_empresa)->sum('total');
+           if($totalPlanilla= Planilla::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->where('id_empleado',$id)->where('id_empresa',$id_empresa)->sum('total')){
+            $p= ($totalPlanilla*100)/$total;
+            $p = number_format($p, 2, '.', '');
+            $descripcion= "$d | $p%";
+            $planillaEmpleados[$i] = Arr::add(['descripcion' => $descripcion], 'total', $totalPlanilla);
+           }
+        }
+        $columns = array_column($planillaEmpleados, 'total');
+        array_multisort($columns, SORT_DESC, $planillaEmpleados);
+
+
+        return view('planilla.index', compact('planillas','mes','año','registros','planillasAnual','totalMes','promedioSemanal','mesAnterior','planillaEmpleados'));
 
     }
 

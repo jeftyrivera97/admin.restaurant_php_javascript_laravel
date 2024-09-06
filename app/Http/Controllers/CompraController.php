@@ -11,6 +11,7 @@ use App\Models\CompraDetalle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Arr;
 
 
 class CompraController extends Controller
@@ -69,9 +70,49 @@ class CompraController extends Controller
         $comprasCredito = number_format($comprasCredito, 2);
         $comprasCredito= "L. $comprasCredito ";
 
+        $comprasProveedores=[];
+        $proveedores= Proveedor::all();
+        $contador= count($proveedores);
+        $total=Compra::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->sum('total');
+
+        for($i=0; $i<$contador; $i++)
+        {
+           $id= $proveedores[$i]->id;
+           $d= $proveedores[$i]->descripcion;
+
+           if($totalCompra= Compra::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->where('id_proveedor',$id)->where('id_empresa',$id_empresa)->sum('total')){
+            $p= ($totalCompra*100)/$total;
+            $p = number_format($p, 2, '.', '');
+            $descripcion= "$d | $p%";
+            $comprasProveedores[$i] = Arr::add(['descripcion' => $descripcion], 'total', $totalCompra);
+           }
+        }
+        $columns = array_column($comprasProveedores, 'total');
+        array_multisort($columns, SORT_DESC, $comprasProveedores);
+
+        $comprasCategorias=[];
+        $categorias= CompraCategoria::all();
+        $contador= count($categorias);
+
+        for($i=0; $i<$contador; $i++)
+        {
+           $id= $categorias[$i]->id;
+           $d= $categorias[$i]->descripcion;
+           if($totalCompra= Compra::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->where('id_categoria',$id)->where('id_empresa',$id_empresa)->sum('total')){
+            $p= ($totalCompra*100)/$total;
+            $p = number_format($p, 2, '.', '');
+            $descripcion= "$d | $p%";
+            $comprasCategorias[$i] = Arr::add(['descripcion' => $descripcion], 'total', $totalCompra);
+           }
+
+        }
+        $columns = array_column($comprasCategorias, 'total');
+        array_multisort($columns, SORT_DESC, $comprasCategorias);
+
         
         $compras=Compra::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->get();
-        return view('compra.index', compact('compras','mes','año','registros','comprasAnual','totalMes','promedioSemanal','mesAnterior','comprasContado','comprasCredito'));
+        return view('compra.index', compact('compras','mes','año','registros','comprasAnual','totalMes','promedioSemanal','mesAnterior',
+        'comprasContado','comprasCredito','comprasProveedores','comprasCategorias'));
     }
 
     public static function obtenerMes($n){

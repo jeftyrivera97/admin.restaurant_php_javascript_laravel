@@ -10,6 +10,7 @@ use App\Models\IngresoCategoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Arr;
 
 
 class IngresoController extends Controller
@@ -24,6 +25,7 @@ class IngresoController extends Controller
             return redirect('/login');
         }
         $id_usuario= auth()->user()->id;
+        $id_empresa=1;
        
         
         $mes= now()->format('F');
@@ -59,7 +61,28 @@ class IngresoController extends Controller
         $totalMes = number_format($totalMes, 2);
         $totalMes= "L. $totalMes ";
 
-        return view('ingreso.index', compact('ingresos','mes','año','registros','ingresosAnual','totalMes','promedioSemanal','mesAnterior'));
+        $ingresosCategorias=[];
+        $categorias= IngresoCategoria::all();
+        $contador= count($categorias);
+
+        for($i=0; $i<$contador; $i++)
+        {
+           $id= $categorias[$i]->id;
+           $d= $categorias[$i]->descripcion;
+
+           $total= Ingreso::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->where('id_empresa',$id_empresa)->sum('total');
+           if($totalIngreso= Ingreso::where('fecha', '>=', $fecha_inicial)->where('fecha', '<=', $fecha_final)->where('id_categoria',$id)->where('id_empresa',$id_empresa)->sum('total')){
+            $p= ($totalIngreso*100)/$total;
+            $p = number_format($p, 2, '.', '');
+            $descripcion= "$d | $p%";
+            $ingresosCategorias[$i] = Arr::add(['descripcion' => $descripcion], 'total', $totalIngreso);
+           }
+        }
+        $columns = array_column($ingresosCategorias, 'total');
+        array_multisort($columns, SORT_DESC, $ingresosCategorias);
+
+
+        return view('ingreso.index', compact('ingresos','mes','año','registros','ingresosAnual','totalMes','promedioSemanal','mesAnterior','ingresosCategorias'));
     }
 
     public static function obtenerMes($n){
