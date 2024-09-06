@@ -72,13 +72,43 @@ class DashboardController extends Controller
         $gastosAnual = number_format($gastosAnual, 2);
         $planillasAnual = number_format($planillasAnual, 2);
 
+        $enero=Ingreso::where('fecha', '>=', "$año-01-01")->where('fecha', '<=', "$año-01-31")->sum('total');
+        $febrero=Ingreso::where('fecha', '>=', "$año-02-01")->where('fecha', '<=', "$año-02-31")->sum('total');
+        $marzo=Ingreso::where('fecha', '>=', "$año-03-01")->where('fecha', '<=', "$año-03-31")->sum('total');
+        $abril=Ingreso::where('fecha', '>=', "$año-04-01")->where('fecha', '<=', "$año-04-31")->sum('total');
+        $mayo=Ingreso::where('fecha', '>=', "$año-05-01")->where('fecha', '<=', "$año-05-31")->sum('total');
+        $junio=Ingreso::where('fecha', '>=', "$año-06-01")->where('fecha', '<=', "$año-06-31")->sum('total');
+        $julio=Ingreso::where('fecha', '>=', "$año-07-01")->where('fecha', '<=', "$año-07-31")->sum('total');
+        $agosto=Ingreso::where('fecha', '>=', "$año-08-01")->where('fecha', '<=', "$año-08-31")->sum('total');
+        $septiembre=Ingreso::where('fecha', '>=', "$año-09-01")->where('fecha', '<=', "$año-09-31")->sum('total');
+        $octubre=Ingreso::where('fecha', '>=', "$año-10-01")->where('fecha', '<=', "$año-10-31")->sum('total');
+        $noviembre=Ingreso::where('fecha', '>=', "$año-11-01")->where('fecha', '<=', "$año-11-31")->sum('total');
+        $diciembre=Ingreso::where('fecha', '>=', "$año-12-01")->where('fecha', '<=', "$año-12-31")->sum('total');
+
+        $data = collect([
+            ['descripcion' => 'Enero', 'total' => $enero],
+            ['descripcion' => 'Febrero', 'total' => $febrero],
+            ['descripcion' => 'Marzo', 'total' => $marzo],
+            ['descripcion' => 'Abril', 'total' => $abril],
+            ['descripcion' => 'Mayo', 'total' => $mayo],
+            ['descripcion' => 'Junio', 'total' => $junio],
+            ['descripcion' => 'Julio', 'total' => $julio],
+            ['descripcion' => 'Agosto', 'total' => $agosto],
+            ['descripcion' => 'Septiembre', 'total' => $septiembre],
+            ['descripcion' => 'Octubre', 'total' => $octubre],
+            ['descripcion' => 'Noviembre', 'total' => $noviembre],
+            ['descripcion' => 'Diciembre', 'total' => $diciembre],
+        ]);
+
+        $data->toJson();
+
         return view('dashboard', compact('comprasMes','mes','año','gastosMes','ingresosMes','planillasMes','comprasAnual', 
-        'ingresosAnual', 'gastosAnual','planillasAnual','balanceMes','balanceAnual', 'pBalanceMes','pBalanceAnual'));
+        'ingresosAnual', 'gastosAnual','planillasAnual','balanceMes','balanceAnual', 'pBalanceMes','pBalanceAnual','data'));
 
     }
 
-    public static function obtenerMes($n){
-        switch ($n) {
+    public static function obtenerMes($numMes){
+        switch ($numMes) {
             case '01':
                 $nombre="Enero";
                 break;
@@ -121,5 +151,40 @@ class DashboardController extends Controller
                 break;
         }
         return $nombre;
+    }
+
+    public static function mesI($año){
+
+
+        $enero=Ingreso::where('fecha', '>=', "$año-01-01")->where('fecha', '<=', "$año-01-31")->sum('total');
+        $febrero=Ingreso::where('fecha', '>=', "$año-02-01")->where('fecha', '<=', "$año-02-31")->sum('total');
+        $marzo=Ingreso::where('fecha', '>=', "$año-03-01")->where('fecha', '<=', "$año-03-31")->sum('total');
+        $abril=Ingreso::where('fecha', '>=', "$año-04-01")->where('fecha', '<=', "$año-04-31")->sum('total');
+        $mayo=Ingreso::where('fecha', '>=', "$año-05-01")->where('fecha', '<=', "$año-05-31")->sum('total');
+        $junio=Ingreso::where('fecha', '>=', "$año-06-01")->where('fecha', '<=', "$año-06-31")->sum('total');
+        $julio=Ingreso::where('fecha', '>=', "$año-07-01")->where('fecha', '<=', "$año-07-31")->sum('total');
+        $agosto=Ingreso::where('fecha', '>=', "$año-08-01")->where('fecha', '<=', "$año-08-31")->sum('total');
+        $septiembre=Ingreso::where('fecha', '>=', "$año-09-01")->where('fecha', '<=', "$año-09-31")->sum('total');
+        $octubre=Ingreso::where('fecha', '>=', "$año-10-01")->where('fecha', '<=', "$año-10-31")->sum('total');
+        $noviembre=Ingreso::where('fecha', '>=', "$año-11-01")->where('fecha', '<=', "$año-11-31")->sum('total');
+        $diciembre=Ingreso::where('fecha', '>=', "$año-12-01")->where('fecha', '<=', "$año-12-31")->sum('total');
+
+        $gIngresosMes = collect([
+            ['descripcion' => 'Enero', 'total' => $enero],
+            ['descripcion' => 'Febrero', 'total' => $febrero],
+            ['descripcion' => 'Marzo', 'total' => $marzo],
+            ['descripcion' => 'Abril', 'total' => $abril],
+            ['descripcion' => 'Mayo', 'total' => $mayo],
+            ['descripcion' => 'Junio', 'total' => $junio],
+            ['descripcion' => 'Julio', 'total' => $julio],
+            ['descripcion' => 'Agosto', 'total' => $agosto],
+            ['descripcion' => 'Septiembre', 'total' => $septiembre],
+            ['descripcion' => 'Octubre', 'total' => $octubre],
+            ['descripcion' => 'Noviembre', 'total' => $noviembre],
+            ['descripcion' => 'Diciembre', 'total' => $diciembre],
+        ]);
+
+        return $gIngresosMes;
+
     }
 }
